@@ -1,0 +1,6 @@
+{
+  "name": "Epub 3.0 Online Editor",
+  "description": "A 3-pane online editor for creating and previewing EPUB 3.0 content with drag-and-drop themes.",
+  "requestFramePermissions": [],
+  "majorCapabilities": []
+}

@@ -1,0 +1,104 @@
+@import "highlight.js/styles/github.css";
+
+@import "tailwindcss";
+@plugin "@tailwindcss/typography";
+
+/* 에디터 내 ePub 블록·표 스타일 */
+.ProseMirror table {
+  border-collapse: collapse;
+  width: 100%;
+  margin: 1em 0;
+}
+
+.ProseMirror th,
+.ProseMirror td {
+  border: 1px solid #cbd5e1;
+  padding: 0.5em 0.75em;
+  min-width: 80px;
+  vertical-align: top;
+}
+
+.ProseMirror th {
+  background: #f1f5f9;
+  font-weight: 600;
+}
+
+.ProseMirror .tableWrapper {
+  overflow-x: auto;
+  margin: 1em 0;
+}
+
+.ProseMirror .column-resize-handle {
+  background-color: #3b82f6;
+  width: 4px;
+}
+
+.ProseMirror blockquote.epigraph {
+  text-align: center;
+  font-style: italic;
+  margin: 2em 1em;
+  border: none;
+  padding: 0;
+}
+
+.ProseMirror aside.footnote {
+  font-size: 0.875em;
+  border-top: 1px dashed #cbd5e1;
+  padding-top: 0.75em;
+  margin-top: 1.5em;
+  color: #64748b;
+}
+
+.ProseMirror hr.page-break {
+  border: none;
+  border-top: 2px dashed #94a3b8;
+  margin: 2.5em 0;
+}
+
+/* 타이포그래피 클래스 */
+.ProseMirror .line-height-normal { line-height: 1.5; }
+.ProseMirror .line-height-relaxed { line-height: 1.8; }
+.ProseMirror .line-height-loose { line-height: 2; }
+.ProseMirror .letter-normal { letter-spacing: normal; }
+.ProseMirror .letter-wide { letter-spacing: 0.05em; }
+.ProseMirror .indent-1 { text-indent: 1.5em; }
+.ProseMirror .indent-2 { text-indent: 3em; }
+.ProseMirror .outdent { margin-left: -1.5em; padding-left: 1.5em; }
+
+.ProseMirror .text-size-sm { font-size: 0.9em; }
+.ProseMirror .text-size-md { font-size: 1em; }
+.ProseMirror .text-size-lg { font-size: 1.15em; }
+.ProseMirror .text-size-xl { font-size: 1.3em; }
+.ProseMirror .font-serif { font-family: Georgia, 'Times New Roman', serif; }
+.ProseMirror .font-sans { font-family: system-ui, -apple-system, 'Segoe UI', sans-serif; }
+.ProseMirror .font-mono { font-family: Consolas, Monaco, monospace; }
+.ProseMirror .font-gothic { font-family: 'Malgun Gothic', 'Apple SD Gothic Neo', sans-serif; }
+.ProseMirror .font-myeongjo { font-family: 'Nanum Myeongjo', Batang, serif; }
+.ProseMirror .font-nanum { font-family: 'Nanum Gothic', 'Malgun Gothic', sans-serif; }
+
+.ProseMirror aside.info-box[data-variant="tip"] {
+  background: #ecfdf5;
+  border-color: #10b981;
+  border-left: 4px solid #10b981;
+}
+.ProseMirror aside.info-box[data-variant="warning"] {
+  background: #fffbeb;
+  border-color: #f59e0b;
+  border-left: 4px solid #f59e0b;
+}
+.ProseMirror aside.info-box[data-variant="example"] {
+  background: #f8fafc;
+  border-color: #94a3b8;
+  border-left: 4px solid #64748b;
+}
+
+.ProseMirror h2 { font-size: 1.5em; font-weight: bold; margin: 1.5em 0 0.75em; }
+.ProseMirror h3 { font-size: 1.25em; font-weight: bold; margin: 1.25em 0 0.5em; }
+.ProseMirror h4 { font-size: 1.1em; font-weight: bold; margin: 1em 0 0.5em; }
+
+.ProseMirror img.epub-image[data-align="center"] { display: block; margin-left: auto; margin-right: auto; }
+.ProseMirror img.epub-image[data-align="right"] { display: block; margin-left: auto; margin-right: 0; }
+
+@media (max-width: 480px) {
+  .ProseMirror table.epub-table { font-size: 0.85em; }
+}
