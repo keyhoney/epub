@@ -8,7 +8,8 @@
     "build": "next build",
     "start": "next start",
     "lint": "eslint .",
-    "clean": "next clean"
+    "clean": "next clean",
+    "pages:deploy": "next build && wrangler pages deploy out --project-name=epub-studio"
   },
   "dependencies": {
     "@dnd-kit/core": "^6.3.1",
