@@ -1,0 +1,108 @@
+name: Build PageEdit on Windows
+
+on:
+
+  workflow_dispatch:
+
+  push:
+    branches: [ master ]
+    tags-ignore:
+      - '**'
+    paths-ignore:
+    - 'docs/**'
+    - 'installer/win_installer_note.txt'
+    - 'ChangeLog.txt'
+    - 'COPYING.txt'
+    - 'version.xml'
+    - '.retired_travis.yml'
+    - '.retired_appveyor.yml'
+    - '**/**.md'
+
+  pull_request:
+    branches: [ master ]
+    tags-ignore:
+      - '**'
+    paths-ignore:
+    - 'docs/**'
+    - 'installer/win_installer_note.txt'
+    - 'ChangeLog.txt'
+    - 'COPYING.txt'
+    - 'version.xml'
+    - '.retired_travis.yml'
+    - '.retired_appveyor.yml'
+    - '**/**.md'
+
+env:
+  BUILD_TYPE: Release
+  DOWNLOADQT: https://github.com/dougmassay/win-qtwebkit-5.212/releases/download/v5.212-1/Qt6.10.2ci_x64_VS2026.7z
+  QT: Qt6.10.2
+  INNO: C:\Program Files (x86)\Inno Setup 6
+
+jobs:
+  build:
+    if: "!contains(github.event.head_commit.message, '[skip ci]')"
+    runs-on: windows-2025-vs2026
+
+    steps:
+    - uses: actions/checkout@v6
+
+    - name: Set up Python
+      uses: actions/setup-python@v6
+      with:
+        python-version: 3.11.3
+
+    - name: Cache Custom Qt
+      uses: actions/cache@v5
+      with:
+        path: ${{runner.workspace}}\${{env.QT}}
+        key: ${{ runner.os }}-qtdeps-${{hashFiles('**/reset-win-caches.txt')}}
+  
+    - name: Install Custom Qt
+      shell: cmd
+      run: |
+        if not exist ${{runner.workspace}}\%QT% cd ${{runner.workspace}} & curl -L -o qt.7z "%DOWNLOADQT%" & 7z x qt.7z -y
+
+    # Add this after windows-latest migrates to windows-2025
+    - name: install InnoSetup
+      shell: cmd
+      run: choco upgrade innosetup -y --no-progress
+    
+    - uses: lukka/get-cmake@latest
+
+    - name: Create Build Environment
+      shell: cmd
+      run: |
+        set PATH=${{runner.workspace}}\%QT%\bin;%PATH%
+        echo ${{runner.workspace}}
+        mkdir ${{runner.workspace}}\build
+        cd ${{runner.workspace}}\build
+        qmake -v
+
+    - name: Build PageEdit
+      shell: cmd
+      working-directory: ${{runner.workspace}}\build
+      run: |
+        set PATH=${{runner.workspace}}\%QT%\bin;%PATH%
+        call "C:\Program Files\Microsoft Visual Studio\18\Enterprise\VC\Auxiliary\Build\vcvarsall.bat" x64
+        cmake %GITHUB_WORKSPACE% ^
+        -G "Ninja" ^
+        -DCMAKE_BUILD_TYPE=%BUILD_TYPE% ^
+        -DQt6_DIR="${{runner.workspace}}\$QT\lib\cmake\Qt6"
+        ninja -j2
+
+    - name: Build Installer
+      shell: cmd
+      working-directory: ${{runner.workspace}}\build
+      if: contains(github.event.head_commit.message, '[deploy]') || github.event_name == 'workflow_dispatch'
+      run: |
+        set PATH=%INNO%;${{runner.workspace}}\%QT%\bin;%PATH%
+        call "C:\Program Files\Microsoft Visual Studio\18\Enterprise\VC\Auxiliary\Build\vcvarsall.bat" x64
+        ninja -j2 deployinstaller
+
+    - uses: actions/upload-artifact@v7
+      if: contains(github.event.head_commit.message, '[deploy]') || github.event_name == 'workflow_dispatch'
+      with:
+        name: pageedit-installer
+        path: ${{runner.workspace}}\build\deploy\*.exe
+        archive: false
+        retention-days: 5

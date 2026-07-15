@@ -1,0 +1,133 @@
+﻿# Backup files left behind by the Emacs editor.
+*~
+
+# Lock files used by the Emacs editor.
+.\#*
+
+# emacs auto recovery files from aborted edits
+\#*\#
+
+#use ful for stashing files
+*.orig
+*.keep
+
+# Temporary files used by the vim editor.
+.*.swp
+.swp
+
+# A hidden file created by the Mac OS X Finder.
+.DS_Store
+
+# Image thumbnail database created by windows
+Thumbs.db
+
+# Various files created by Visual Studio
+*.sln
+*.suo
+*.vcproj
+*.user*
+#*.rc
+*.ncb
+*.pch
+*.dep
+*.idb
+*.exp
+*.res
+*.manifest
+*.ilk
+*.pdb
+*.def
+Release
+Debug
+BuildLog.htm
+
+# Various files and folders created by CMake
+CMakeFiles
+CMakeScripts
+CMakeCache.txt
+*.cmake
+*.dir
+ALL_BUILD*
+
+# Misc files
+*.svn
+*.a
+*.o
+*.obj
+*.lib
+*.exe
+*.dll
+*.a
+*.app
+*.xcodeproj
+*.pbxbtree
+*.pbxindex
+*.build
+*.smp
+*.pl
+*.pyc
+*.pyo
+*.orig
+*.bak
+*.rar
+OpenCandy
+tags
+build
+
+# C++ objects and libs
+*.slo
+*.lo
+*.o
+*.a
+*.la
+*.lai
+*.so
+*.dll
+*.dylib
+
+# Qt-es
+object_script.*.Release
+object_script.*.Debug
+*_plugin_import.cpp
+/.qmake.cache
+/.qmake.stash
+*.pro.user
+*.pro.user.*
+*.qbs.user
+*.qbs.user.*
+*.moc
+moc_*.cpp
+moc_*.h
+qrc_*.cpp
+ui_*.h
+*.qmlc
+*.jsc
+Makefile*
+*build-*
+
+# Qt unit tests
+target_wrapper.*
+
+# QtCreator
+*.autosave
+
+# QtCreator Qml
+*.qmlproject.user
+*.qmlproject.user.*
+
+# QtCreator CMake
+CMakeLists.txt.user*
+
+# QtCreator 4.8< compilation database 
+compile_commands.json
+
+# QtCreator local machine specific files for imported projects
+*creator.user*
+
+# Appimage created archives
+*.tar.xz
+
+#AppImage builds
+*.AppImage
+*.zsync
+

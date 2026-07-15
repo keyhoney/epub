@@ -1,0 +1,16 @@
+Change the content of this file to reset the caches for the github actions sigil windows build
+
+reset cache on 26 July 2023
+reset cache on 26 August 2023
+reset cache on 4 September 2023
+reset cache on 9 September 2023
+reset cache on 12 October 2023
+reset cache on 19 November 2023
+reset cache on 25 March 2024
+reset cache on 26 July 2024
+reset cache on 23 October 2024
+reset cache on 5 February 2025
+reset cache on 15 September 2025
+reset cache on 7 October 2025
+reset cache on 9 February 2026
+reset cache on 18 February 2026

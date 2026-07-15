@@ -1,0 +1,272 @@
+Change Log
+==========
+
+PageEdit-2.7.6
+    Bug Fixes
+      - Update broken or missing translations from the previous release
+
+    New Features
+      - add ability to unset environment variables using the env-vars.txt file
+ 
+
+PageEdit-2.7.5
+    Bug Fixes
+      - make heading tool properly handle bare text inside the body tag without errors
+
+    New Features
+      - updated to Qt 6.10.2
+
+
+PageEdit-2.7.0
+    New Features
+      - assign short cut Ctrl+Shift+N to create a numbered list
+      - Modify HeadingChange ToolButton to remember last used action
+
+
+PageEdit-2.6.2
+    Bug Fixes
+      - fix issue with AppImage builds not being able to find shared resources
+      - fix potential crash issue in Utility::UseNFC if used before MainApplication created
+      - minor fixes and changes pulled in from Sigil
+
+    New Features
+      - add ability for users to create and "env-vars.txt" file in PageEdit's Preferences folder
+        to make setting environment variables much easier for all platforms.
+      - revamp AppImage CI build to use Docker images
+
+
+PageEdit- 2.5.2
+    Bug Fixes
+      - improve Sigil CodeView to PageEdit intial syncing of cursor location
+
+
+PageEdit-2.5.0
+    New Features
+      - update MacOS and Windows builds to use Qt 6.8.2
+      - improve light to dark theming for Linux
+      - when launched via Sigil's External Xhtml Editor when editing an xhtml file in CodeView,
+        the cursor in PageEdit will sync to the current editing position
+
+    Bug Fixes
+      - fix bug when current MainWindow geometry was not being saved
+      - change WebProfileMgr to use off-the-record profiles until Qt profile creation bugs get fixed
+
+
+PageEdit-2.4.0
+
+   Bug Fixes
+     - update PageEdit startup code to use fixes from Qt6 ala Sigil
+
+   New Features
+     - Update to Qt 6.7.3
+     - allow Windows installer to work on arm64
+
+PageEdit-2.3.1
+  Bug Fixes
+    - fix double pasting of xhtml/html content into PageEdit
+
+
+PageEdit-2.3.0
+  Bug Fixes
+    - fix broken use of arrow keys when selecting images to insert
+    - move to Qt 6.7.2 for improved security and bug fixes
+
+  New Features
+    - move to Qt6 (minimum version 6.4.2), remove support for Qt5 as it cluttered the codebase
+    - remove the need for Qt6Core5Compat library (use QStringView instead of QStringRef)
+    - added support for using NFC for search, and for all content, links, hrefs, urls
+    - added support for Windows Dark mode
+    - added support for auto dark/light switching for Windows and major Linux desktops to match MacOS
+
+
+PageEdit-2.2.0
+  Bug Fixes
+    - use patched Qt 6.6.2 to fix huge memory leak when resizing QWebEngineView on macOS
+    - fix broken URLEncodePath that prevent proper insertion of Media (image, audo, video)
+    
+
+PageEdit-2.1.0
+  Bug Fixes
+    - fixes for numerous Qt related bug and security issues via update to Qt 6.6.2
+    - fix poor or missing svg rendering of thumbnails when selecting images to insert
+    
+  New Features
+    - Improved Accessibility support via Qt, especially for users on macOS
+
+
+PageEdit-2.0.2
+  Bug Fixes
+    - workaround QtWebEngine load Finished signal not indicating when javascript is ready
+    - remove previous hack for missing loadFinished after loadStarted during internal links
+    - update Qt with patches to fix numerous Accessibility bugs in Qt6.5.2 that caused crashing
+    - workaround MacOS QMessageBox loss of focus Qt 6.5.X bug without hurting other platforms
+    - give user the chance to cancel leaving a page if modified
+    - update macOS Info.plist for macOS min of macOS 11.0
+    - add workaround Edit->Paste of html from clipboard without full context on Windows
+
+
+PageEdit-2.0.0
+  New Features
+    - updated official releases to use Qt 6.5.2
+    - added ability to create and apply Clips
+    - updated to jquery 3.6.4 for security fixes
+    - added ability to control print output quality (dpi)
+    - added ability to show embedded pdfs in an epub (ala ADE)
+
+  Bug Fixes:
+    - updated to the latest sigil-gumbo for bug fixes and to add new tags
+    - fixed all/most compiler warnings depending on platfrom/compiler
+    - added WebProfileMgr to fix crashes and better manage QWebEngineProfile and local storage
+
+
+PageEdit-1.9.20
+  New Features
+    - add Preferences settings to disable gpu acceleration
+
+  Bug Fixes
+    - workaround linux g++/gcc issues with -flto
+    - make keyboard shortcuts for Upper and Lower casing intl keyboard friendly 
+    - more fixes for building and running under Qt6
+    - fix issues with inserting links when anchor text contains characters
+        that need to be xml escaped
+
+    
+PageEdit-1.9.10
+  New Features
+   - support building with Qt6
+   - make Qt6 versions use their own ini file for settings
+   - add Ctrl+PgUp/PgDown shortcuts to Prev and Next actions
+
+  Bug Fixes
+   - harden URLInterceptor to dead QWidget bugs in Qt
+   - setMovable true on QToolbars to work around broken linux theme issues
+   - update sigil gumbo version with upstream fixes
+
+
+PageEdit-1.7.0
+  Bug Fixes
+   - Add workaround to prevent 2 windows from opening on macOS from FileOpen event
+   - Fix bug in SelectHyperlink that failed with specific external links
+   - prevent PageEdit_injected id from appearing as a possible link target
+
+
+PageEdit-1.6.0
+  New Features
+    - add ability to allow a spine position paramter to be passed along with opf path
+      to match changes in Sigil-1.6.0 to simplify interface with Sigil
+
+  Bug Fixes
+    - bring SelectCharacter to be in sync with its Sigil counterpart
+    - remove tab and disable InsertFile if no Media is present
+    - fix typo in Greak letter nu (Thank you Doitsu!)
+
+PageEdit-1.5.0
+  New Features
+    - Add ability to print (with Preview) to PDF any file being viewed
+    - Improved granularity for Windows Installer
+  Bug Fixes
+    - fix bug in URLInterceptor being too aggressive
+
+PageEdit-1.4.0
+  New Features
+    - Add Case Change tool/icons
+    - Move to all SVG based icons courtesy of BeckyEbook (Thank you!)
+  Bug Fixes
+    - Fix incorrect Find next and previous search icons
+    - Uses Qt::AA+UseHighDpiPixmaps on all platforms to rpevent pixelated icons
+    - Update GumboInterface to Sync with Sigil and handle PercentEncoding as IRI
+
+PageEdit-1.3.0
+  New Features
+    - Windows/macOS release build updated to Qt 5.12.9 with added bug fixes
+    - Added experimental protection against evil epubs manipulating file: urls
+    - Changes to support building with Visual Studio 2019 on Windows
+    - Improved Windows Installer and handling of C++ runtime libraries
+  Bug Fixes
+    - refactored built-in dark theme
+    - Fixes to support Qt 5.15 on Linux
+
+PageEdit-1.2.0
+  Bug Fixes
+    - fix issues when using PageEdit to edit epubs from outside of Sigil's environment
+        - properly detect and handle non utf-8 encodings
+        - properly convert html to xhtml syntax
+        - properly add the xml header file where needed
+
+PageEdit-1.1.1
+  Bug Fixes
+    - prevent the lin_dark_scrollbar.css link from being leftover when dark mode used
+    - prevent open from asking to save if nothing else has changed
+    - clean up whitespace leftover after dark injection
+
+PageEdit-1.1.0
+  Bug Fixes
+    - fix bug for linking to top of page in SelectHyperlink
+    - fix bug in zoom slider that did not reflect initial zoom setting on startup
+    - fix bug in missing icon sizes (Thanks BeckyEbook)
+  New Features
+    - added support for a Dark Mode for Windows, Linux and macOS
+    - added new icons courtesy of BeckyEbook that work under both light and dark modes
+    - added Zoom-In, Zoom-Out, reset support to Inspector using key shortcuts (META +, META -, META 0) 
+    - added support for Windows HighDPI settings
+    - added support for setting the user interface font
+
+PageEdit-1.0.0
+  Bug Fixes:
+    - modified Qt code to fix the return after an h6 heading bug
+    - whitespace is now preserved in code tags
+   New Features
+    - added ability to insert "id" attibutes into current xhtml file
+    - added ability to insert hyperlinks to other existing xhtml files (only when opened with OPF)
+    - added ability to insert links to existing images, audio, and video (open when opened with OPF) 
+
+PageEdit-0.9.6
+  Bug Fixes:
+    - properly handle javascript location.href style links
+    - try to prevent crashes when files deleted out from under PageEdit
+    - fix the longest common path routine to actually work
+    - remove the load text filter as it was not supported
+    - set default paragraph separator to 'p' not 'div' when editing
+
+
+PageEdit-0.9.5
+  New Features
+     - add the ability to pass all xhtml files in the spine in Reading Order to PageEdit 
+            via opening the OPF.  Allow quick file navigation via navigation menu and next 
+            and previous arrows keys.
+
+     - add a Edit vs Preview mode toggle icon that will allow links among xhtmls files in the spine
+            to be active and work (in Mode: Preview)
+
+     - installed a QtMessage handler to create a debug log file controlled via a
+          PAGEEDIT_DEBUG_LOGFILE environment setting, to simplify user bug issue feedback
+
+  Bug Fixes
+     - fix macOS specific launch bugs due to bug in canonical files and timing of Apple events
+     - make sure jQuery is loaded before trying to manipulate a file by imporving web load sequence
+     - use GetEnvironmentVar to uniformly access Environment Vars in a cross platform manner
+     - disable prev and next navigation buttons when only one input xhtml file exists
+
+
+PageEdit-0.8.0
+  New Features
+     - add user preferences to control use of white-space:pre-wrap vs nbsp chars
+     - add user preferences to set spellchecking dictionary
+     - add SpellChecking capability for QWebEngine Dictionaries 
+            (.bdic modified version of Hunspell dcitionaries)
+     - add Find capability (no replace just as in BookView)
+     - allow cleanup after paste from  Word during Save using
+            environment variable:PAGEEDIT_ENABLE_WORD_PASTE_CLEANUP
+       Note: risky since it removes style tags that are in the body and all xhtml comments
+  Bug Fixes
+     - remove spurious newlines in injected user stylesheets and controls (Thanks BeckyDTP!)
+     - actually compare source to detect all changes
+     - fix macOS specific bug that allowed multiple Dockwidget windows to become tabs
+
+
+PageEdit-0.7.1
+   - minor updates
+
+PageEdit-0.7.0
+   - Initial Beta Release
+

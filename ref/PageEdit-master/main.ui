@@ -1,0 +1,1645 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>MainWindow</class>
+ 
+ <widget class="QMainWindow" name="MainWindow">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>1000</width>
+    <height>700</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>PageEdit</string>
+  </property>
+  <property name="iconSize">
+   <size>
+    <width>48</width>
+    <height>48</height>
+   </size>
+  </property>
+  <property name="toolButtonStyle">
+   <enum>Qt::ToolButtonIconOnly</enum>
+  </property>
+  
+  <widget class="QWidget" name="centralwidget">
+   <property name="layoutDirection">
+    <enum>Qt::LeftToRight</enum>
+   </property>
+   <layout class="QVBoxLayout" name="verticalLayout">
+    <property name="spacing">
+     <number>0</number>
+    </property>
+    <property name="leftMargin">
+     <number>0</number>
+    </property>
+    <property name="topMargin">
+     <number>0</number>
+    </property>
+    <property name="rightMargin">
+     <number>0</number>
+    </property>
+    <property name="bottomMargin">
+     <number>0</number>
+    </property>
+   </layout>
+  </widget>
+
+  <widget class="QMenuBar" name="menubar">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>0</y>
+     <width>1000</width>
+     <height>22</height>
+    </rect>
+   </property>
+
+   <widget class="QMenu" name="menuFile">
+    <property name="title">
+     <string>&amp;File</string>
+    </property>
+    <addaction name="actionOpen"/>
+    <addaction name="actionSave"/>
+    <addaction name="actionSaveAs"/>
+    <addaction name="actionExit"/>
+    <addaction name="actionPreferences"/>
+    <addaction name="actionPrint"/>
+    <addaction name="actionAbout"/>
+   </widget>
+   
+   <widget class="QMenu" name="menuEdit">
+    <property name="title">
+     <string>&amp;Edit</string>
+    </property>
+    <addaction name="actionUndo"/>
+    <addaction name="actionRedo"/>
+    <addaction name="separator"/>
+    <addaction name="actionCut"/>
+    <addaction name="actionCopy"/>
+    <addaction name="actionPaste"/>
+    <addaction name="actionSelectAll" />
+   </widget>
+
+   <widget class="QMenu" name="menuFind">
+    <property name="title">
+     <string>&amp;Search</string>
+    </property>
+    <widget class="QMenu" name="menuSearchCurrentFile">
+     <property name="title">
+      <string>Current Fil&amp;e</string>
+     </property>
+     <addaction name="actionFindNextInFile"/>
+     <addaction name="separator"/>
+     <addaction name="actionReplaceNextInFile"/>
+     <addaction name="actionReplaceAllInFile"/>
+     <addaction name="separator"/>
+     <addaction name="actionCountInFile"/>
+    </widget>
+    <addaction name="actionFind"/>
+    <addaction name="separator"/>
+    <addaction name="actionFindNext"/>
+    <addaction name="actionFindPrevious"/>
+    <addaction name="separator"/>
+    <addaction name="actionReplaceCurrent"/>
+    <addaction name="actionReplaceNext"/>
+    <addaction name="actionReplacePrevious"/>
+    <addaction name="actionReplaceAll"/>
+    <addaction name="separator"/>
+    <addaction name="actionCount"/>
+    <addaction name="separator"/>
+    <addaction name="menuSearchCurrentFile"/>
+   </widget>
+   
+   <widget class="QMenu" name="menuInsert">
+    <property name="title">
+     <string>&amp;Insert</string>
+    </property>
+    <addaction name="actionInsertSGFSectionMarker"/>
+    <addaction name="actionInsertSpecialCharacter"/>
+    <addaction name="separator"/>
+    <addaction name="actionInsertBulletedList"/>
+    <addaction name="actionInsertNumberedList"/>
+    <addaction name="separator"/>
+    <addaction name="actionInsertId"/>
+    <addaction name="actionInsertHyperlink"/>
+    <addaction name="actionInsertFile"/>
+   </widget>
+   
+   <widget class="QMenu" name="menuFormat">
+    <property name="title">
+     <string>For&amp;mat</string>
+    </property>
+    
+    <widget class="QMenu" name="menuHeadings">
+     <property name="title">
+      <string>&amp;Heading</string>
+     </property>
+     <addaction name="actionHeading1"/>
+     <addaction name="actionHeading2"/>
+     <addaction name="actionHeading3"/>
+     <addaction name="actionHeading4"/>
+     <addaction name="actionHeading5"/>
+     <addaction name="actionHeading6"/>
+     <addaction name="actionHeadingNormal"/>
+     <addaction name="separator"/>
+     <addaction name="actionHeadingPreserveAttributes"/>
+    </widget>
+
+    <widget class="QMenu" name="menuChangeCase">
+     <property name="title">
+      <string>C&amp;hange Case</string>
+     </property>
+     <addaction name="actionCasingLowercase"/>
+     <addaction name="actionCasingUppercase"/>
+     <addaction name="actionCasingTitlecase"/>
+     <addaction name="actionCasingCapitalize"/>
+    </widget>
+
+    <addaction name="menuHeadings"/>
+    <addaction name="separator"/>
+    <addaction name="actionBold"/>
+    <addaction name="actionItalic"/>
+    <addaction name="actionUnderline"/>
+    <addaction name="actionStrikethrough"/>
+    <addaction name="actionSubscript"/>
+    <addaction name="actionSuperscript"/>
+    <addaction name="separator"/>
+    <addaction name="menuChangeCase"/>
+    <addaction name="separator"/>
+    <addaction name="actionAlignLeft"/>
+    <addaction name="actionAlignCenter"/>
+    <addaction name="actionAlignRight"/>
+    <addaction name="actionAlignJustify"/>
+    <addaction name="separator"/>
+    <addaction name="actionDecreaseIndent"/>
+    <addaction name="actionIncreaseIndent"/>
+   </widget>
+   
+   <widget class="QMenu" name="menuView">
+    <property name="title">
+     <string>&amp;View</string>
+    </property>
+    <addaction name="actionZoomIn"/>
+    <addaction name="actionZoomOut"/>
+    <addaction name="actionZoomReset"/>
+   </widget>
+   
+   <widget class="QMenu" name="menuInspect">
+    <property name="title">
+     <string>Inspector</string>
+    </property>
+    <addaction name="actionInspect" />
+   </widget>
+
+   <widget class="QMenu" name="menuClips">
+     <property name="title">
+       <string>Clips</string>
+     </property>
+     <addaction name="actionClipEdit"/>
+     <addaction name="actionClips"/>
+     <addaction name="actionClipBar"/>
+   </widget>
+     
+   <addaction name="menuFile"/>
+   <addaction name="menuEdit"/>
+   <addaction name="menuFind"/>
+   <addaction name="menuInsert"/>
+   <addaction name="menuFormat"/>
+   <addaction name="menuView"/>
+   <addaction name="menuInspect"/>
+   <addaction name="menuClips"/>
+  </widget>
+
+  <widget class="QToolBar" name="toolBarFileActions">
+   <property name="windowTitle">
+    <string>File</string>
+   </property>
+   <attribute name="toolBarArea">
+    <enum>TopToolBarArea</enum>
+   </attribute>
+   <attribute name="toolBarBreak">
+    <bool>false</bool>
+   </attribute>
+   <addaction name="actionOpen"/>
+   <addaction name="actionSave"/>
+  </widget>
+
+  <widget class="QToolBar" name="toolBarTextManip">
+   <property name="windowTitle">
+    <string>Edit</string>
+   </property>
+   <attribute name="toolBarArea">
+    <enum>TopToolBarArea</enum>
+   </attribute>
+   <attribute name="toolBarBreak">
+    <bool>false</bool>
+   </attribute>
+   <addaction name="actionUndo"/>
+   <addaction name="actionRedo"/>
+   <addaction name="actionCut"/>
+   <addaction name="actionCopy"/>
+   <addaction name="actionPaste"/>
+   <addaction name="actionSelectAll"/>
+  </widget>
+
+  <widget class="QToolBar" name="toolBarMode">
+   <property name="windowTitle">
+    <string>Mode</string>
+   </property>
+   <attribute name="toolBarArea">
+    <enum>TopToolBarArea</enum>
+   </attribute>
+   <attribute name="toolBarBreak">
+    <bool>false</bool>
+   </attribute>
+   <addaction name="actionMode" />
+  </widget>
+
+  <widget class="QToolBar" name="toolBarInsertions">
+   <property name="windowTitle">
+    <string>Insert</string>
+   </property>
+   <attribute name="toolBarArea">
+    <enum>TopToolBarArea</enum>
+   </attribute>
+   <attribute name="toolBarBreak">
+    <bool>false</bool>
+   </attribute>
+   <addaction name="actionInsertBulletedList"/>
+   <addaction name="actionInsertNumberedList"/>
+   <addaction name="actionInsertSpecialCharacter"/>
+   <addaction name="actionInsertSGFSectionMarker"/>
+   <addaction name="actionInsertId"/>
+   <addaction name="actionInsertHyperlink"/>
+   <addaction name="actionInsertFile"/>
+  </widget>
+
+  <widget class="QToolBar" name="toolBarInspect">
+   <property name="windowTitle">
+    <string>Inspect</string>
+   </property>
+   <attribute name="toolBarArea">
+    <enum>TopToolBarArea</enum>
+   </attribute>
+   <attribute name="toolBarBreak">
+    <bool>false</bool>
+   </attribute>
+   <addaction name="actionInspect"/>
+  </widget>
+
+  <widget class="QToolBar" name="toolBarClips">
+   <property name="windowTitle">
+    <string>Clip Bar</string>
+   </property>
+   <attribute name="toolBarArea">
+    <enum>TopToolBarArea</enum>
+   </attribute>
+   <attribute name="toolBarBreak">
+    <bool>true</bool>
+   </attribute>
+   <addaction name="actionClip1"/>
+   <addaction name="actionClip2"/>
+   <addaction name="actionClip3"/>
+   <addaction name="actionClip4"/>
+   <addaction name="actionClip5"/>
+   <addaction name="actionClip6"/>
+   <addaction name="actionClip7"/>
+   <addaction name="actionClip8"/>
+   <addaction name="actionClip9"/>
+   <addaction name="actionClip10"/>
+   <addaction name="actionClip11"/>
+   <addaction name="actionClip12"/>
+   <addaction name="actionClip13"/>
+   <addaction name="actionClip14"/>
+   <addaction name="actionClip15"/>
+   <addaction name="actionClip16"/>
+   <addaction name="actionClip17"/>
+   <addaction name="actionClip18"/>
+   <addaction name="actionClip19"/>
+   <addaction name="actionClip20"/>
+  </widget>
+
+  <widget class="QToolBar" name="toolBarFind">
+   <property name="windowTitle">
+    <string>Find</string>
+   </property>
+   <attribute name="toolBarArea">
+    <enum>TopToolBarArea</enum>
+   </attribute>
+   <attribute name="toolBarBreak">
+    <bool>false</bool>
+   </attribute>
+   <addaction name="actionFind"/>
+  </widget>
+
+  <widget class="QToolBar" name="toolBarHeadings">
+   <property name="windowTitle">
+    <string>Heading</string>
+   </property>
+   <attribute name="toolBarArea">
+    <enum>TopToolBarArea</enum>
+   </attribute>
+   <attribute name="toolBarBreak">
+    <bool>true</bool>
+   </attribute>
+   <widget class="QToolButton" name="tbHeadings">
+    <property name="icon">
+    <iconset resource="./icons/icons.qrc">
+     <normaloff>:/icons/heading-all.svg</normaloff>:/icons/heading-all.svg</iconset>
+   </property>
+    <property name="toolTip">
+      <string>set Heading Level of Selected Text</string>
+   </property>
+    <addaction name="actionHeading1"/>
+    <addaction name="actionHeading2"/>
+    <addaction name="actionHeading3"/>
+    <addaction name="actionHeading4"/>
+    <addaction name="actionHeading5"/>
+    <addaction name="actionHeading6"/>
+    <addaction name="actionHeadingNormal"/>
+   </widget>
+  </widget>
+
+  <widget class="QToolBar" name="toolBarChangeCase">
+   <property name="windowTitle">
+    <string>Change Case</string>
+   </property>
+   <attribute name="toolBarArea">
+    <enum>TopToolBarArea</enum>
+   </attribute>
+   <attribute name="toolBarBreak">
+    <bool>false</bool>
+   </attribute>
+   <addaction name="actionCasingLowercase"/>
+   <addaction name="actionCasingUppercase"/>
+   <addaction name="actionCasingTitlecase"/>
+   <addaction name="actionCasingCapitalize"/>
+  </widget>
+  
+  <widget class="QToolBar" name="toolBarTextFormats">
+   <property name="windowTitle">
+    <string>Format</string>
+   </property>
+   <attribute name="toolBarArea">
+    <enum>TopToolBarArea</enum>
+   </attribute>
+   <attribute name="toolBarBreak">
+    <bool>false</bool>
+   </attribute>
+   <addaction name="actionBold"/>
+   <addaction name="actionItalic"/>
+   <addaction name="actionUnderline"/>
+   <addaction name="actionStrikethrough"/>
+   <addaction name="actionSubscript"/>
+   <addaction name="actionSuperscript"/>
+  </widget>
+  
+  <widget class="QToolBar" name="toolBarTextAlign">
+   <property name="windowTitle">
+    <string>Align</string>
+   </property>
+   <attribute name="toolBarArea">
+    <enum>TopToolBarArea</enum>
+   </attribute>
+   <attribute name="toolBarBreak">
+    <bool>false</bool>
+   </attribute>
+   <addaction name="actionAlignLeft"/>
+   <addaction name="actionAlignCenter"/>
+   <addaction name="actionAlignRight"/>
+   <addaction name="actionAlignJustify"/>
+  </widget>
+
+  <widget class="QToolBar" name="toolBarIndents">
+   <property name="windowTitle">
+    <string>Indent</string>
+   </property>
+   <attribute name="toolBarArea">
+    <enum>TopToolBarArea</enum>
+   </attribute>
+   <attribute name="toolBarBreak">
+    <bool>false</bool>
+   </attribute>
+   <addaction name="actionDecreaseIndent"/>
+   <addaction name="actionIncreaseIndent"/>
+  </widget>
+
+  <widget class="QToolBar" name="toolBarNavigate">
+   <property name="windowTitle">
+    <string>Navigate</string>
+   </property>
+   <attribute name="toolBarArea">
+    <enum>TopToolBarArea</enum>
+   </attribute>
+   <attribute name="toolBarBreak">
+    <bool>true</bool>
+   </attribute>
+   <widget class="QComboBox" name="cbNavigate">
+   <property name="toolTip">
+    <string>Navigation List</string>
+   </property>
+   </widget>
+   <addaction name="actionPrev"/>
+   <addaction name="actionNext"/>
+   <addaction name="actionLinkReturn"/>
+  </widget>
+
+  <widget class="QStatusBar" name="statusbar"/>
+
+  <action name="actionSave">
+   <property name="icon">
+    <iconset resource="./icons/icons.qrc">
+     <normaloff>:/icons/document-save.svg</normaloff>:/icons/document-save.svg</iconset>
+   </property>
+   <property name="text">
+    <string>&amp;Save</string>
+   </property>
+   <property name="toolTip">
+    <string>Save the current file.</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+S</string>
+   </property>
+  </action>
+
+  <action name="actionPrint">
+   <property name="icon">
+    <iconset resource="./icons/icons.qrc">
+     <normaloff>:/icons/document-print.svg</normaloff>:/icons/document-print.svg</iconset>
+   </property>
+   <property name="text">
+    <string>&amp;Print</string>
+   </property>
+   <property name="toolTip">
+    <string>Print the current Page.</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+P</string>
+   </property>
+  </action>
+
+  <action name="actionSaveAs">
+   <property name="text">
+    <string>Save &amp;As...</string>
+   </property>
+   <property name="toolTip">
+    <string>Save the current file with a different filename.</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+Shift+S</string>
+   </property>
+  </action>
+  
+  <action name="actionCut">
+   <property name="icon">
+    <iconset resource="./icons/icons.qrc">
+     <normaloff>:/icons/edit-cut.svg</normaloff>:/icons/edit-cut.svg</iconset>
+   </property>
+   <property name="text">
+    <string>Cu&amp;t</string>
+   </property>
+   <property name="toolTip">
+    <string>Cuts the selected text from the document and puts it on the clipboard.</string>
+   </property>
+  </action>
+  
+  <action name="actionPaste">
+   <property name="icon">
+    <iconset resource="./icons/icons.qrc">
+     <normaloff>:/icons/edit-paste.svg</normaloff>:/icons/edit-paste.svg</iconset>
+   </property>
+   <property name="text">
+    <string>&amp;Paste</string>
+   </property>
+   <property name="toolTip">
+    <string>Pastes the content from the clipboard into the file.</string>
+   </property>
+  </action>  
+  
+  <action name="actionUndo">
+   <property name="icon">
+    <iconset resource="./icons/icons.qrc">
+     <normaloff>:/icons/edit-undo.svg</normaloff>:/icons/edit-undo.svg</iconset>
+   </property>
+   <property name="text">
+    <string>&amp;Undo</string>
+   </property>
+   <property name="toolTip">
+    <string>Reverts the changes of the previous operation.</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+Z</string>
+   </property>
+  </action>
+  
+  <action name="actionRedo">
+   <property name="icon">
+    <iconset resource="./icons/icons.qrc">
+     <normaloff>:/icons/edit-redo.svg</normaloff>:/icons/edit-redo.svg</iconset>
+   </property>
+   <property name="text">
+    <string>&amp;Redo</string>
+   </property>
+   <property name="toolTip">
+    <string>Restores the changes reverted by the previous Undo action.</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+Y</string>
+   </property>
+  </action>
+  
+  <action name="actionCopy">
+   <property name="icon">
+    <iconset resource="./icons/icons.qrc">
+     <normaloff>:/icons/edit-copy.svg</normaloff>:/icons/edit-copy.svg</iconset>
+   </property>
+   <property name="text">
+    <string>&amp;Copy</string>
+   </property>
+   <property name="toolTip">
+    <string>Copies the selected text and puts it on the clipboard.</string>
+   </property>
+  </action>
+
+  <action name="actionAlignLeft">
+   <property name="checkable">
+    <bool>false</bool>
+   </property>
+   <property name="icon">
+    <iconset resource="./icons/icons.qrc">
+     <normaloff>:/icons/format-justify-left.svg</normaloff>:/icons/format-justify-left.svg</iconset>
+   </property>
+   <property name="text">
+    <string>Align &amp;Left</string>
+   </property>
+   <property name="toolTip">
+    <string>Align the paragraph to the left.</string>
+   </property>
+  </action>
+  
+  
+  <action name="actionAlignRight">
+   <property name="checkable">
+    <bool>false</bool>
+   </property>
+   <property name="icon">
+    <iconset resource="./icons/icons.qrc">
+     <normaloff>:/icons/format-justify-right.svg</normaloff>:/icons/format-justify-right.svg</iconset>
+   </property>
+   <property name="text">
+    <string>Align &amp;Right</string>
+   </property>
+   <property name="toolTip">
+    <string>Align the paragraph to the right.</string>
+   </property>
+  </action>
+  
+  <action name="actionAlignCenter">
+   <property name="checkable">
+    <bool>false</bool>
+   </property>
+   <property name="icon">
+    <iconset resource="./icons/icons.qrc">
+     <normaloff>:/icons/format-justify-center.svg</normaloff>:/icons/format-justify-center.svg</iconset>
+   </property>
+   <property name="text">
+    <string>&amp;Center</string>
+   </property>
+   <property name="toolTip">
+    <string>Center the paragraph.</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+E</string>
+   </property>
+  </action>
+  
+  <action name="actionAlignJustify">
+   <property name="checkable">
+    <bool>false</bool>
+   </property>
+   <property name="icon">
+    <iconset resource="./icons/icons.qrc">
+     <normaloff>:/icons/format-justify-fill.svg</normaloff>:/icons/format-justify-fill.svg</iconset>
+   </property>
+   <property name="text">
+    <string>&amp;Justify</string>
+   </property>
+   <property name="toolTip">
+    <string>Align the paragraph to both the left and right margins.</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+J</string>
+   </property>
+  </action>
+  
+  <action name="actionBold">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="icon">
+    <iconset resource="./icons/icons.qrc">
+     <normaloff>:/icons/format-text-bold.svg</normaloff>:/icons/format-text-bold.svg</iconset>
+   </property>
+   <property name="text">
+    <string>&amp;Bold</string>
+   </property>
+   <property name="toolTip">
+    <string>Make the selected text bold.</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+B</string>
+   </property>
+  </action>
+  
+  <action name="actionItalic">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="icon">
+    <iconset resource="./icons/icons.qrc">
+     <normaloff>:/icons/format-text-italic.svg</normaloff>:/icons/format-text-italic.svg</iconset>
+   </property>
+   <property name="text">
+    <string>&amp;Italic</string>
+   </property>
+   <property name="toolTip">
+    <string>Make the selected text italic.</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+I</string>
+   </property>
+  </action>
+
+  <action name="actionOpen">
+   <property name="icon">
+    <iconset resource="./icons/icons.qrc">
+     <normaloff>:/icons/document-open.svg</normaloff>:/icons/document-open.svg</iconset>
+   </property>
+   <property name="text">
+    <string>&amp;Open...</string>
+   </property>
+   <property name="toolTip">
+    <string>Open a file from disk.</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+O</string>
+   </property>
+  </action>
+  
+  <action name="actionUnderline">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="icon">
+    <iconset resource="./icons/icons.qrc">
+     <normaloff>:/icons/format-text-underline.svg</normaloff>:/icons/format-text-underline.svg</iconset>
+   </property>
+   <property name="text">
+    <string>&amp;Underline</string>
+   </property>
+   <property name="toolTip">
+    <string>Underline the selected text.</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+U</string>
+   </property>
+  </action>
+
+  <action name="actionCasingLowercase">
+   <property name="icon">
+    <iconset resource="../icons/icons.qrc">
+     <normaloff>:/icons/format-case-lowercase.svg</normaloff>:/icons/format-case-lowercase.svg</iconset>
+   </property>
+   <property name="text">
+    <string>&amp;Lowercase</string>
+   </property>
+   <property name="toolTip">
+    <string>Set selected text to lowercase.</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+Alt+L</string>
+   </property>
+  </action>
+
+  <action name="actionCasingUppercase">
+   <property name="icon">
+    <iconset resource="../icons/icons.qrc">
+     <normaloff>:/icons/format-case-uppercase.svg</normaloff>:/icons/format-case-uppercase.svg</iconset>
+   </property>
+   <property name="text">
+    <string>&amp;Uppercase</string>
+   </property>
+   <property name="toolTip">
+    <string>Set selected text to uppercase.</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+Alt+U</string>
+   </property>
+  </action>
+  
+  <action name="actionCasingTitlecase">
+   <property name="icon">
+    <iconset resource="../icons/icons.qrc">
+     <normaloff>:/icons/format-case-titlecase.svg</normaloff>:/icons/format-case-titlecase.svg</iconset>
+   </property>
+   <property name="text">
+    <string>&amp;Titlecase</string>
+   </property>
+   <property name="toolTip">
+    <string>Capitalize the first letter of each word selected.</string>
+   </property>
+  </action>
+  
+  <action name="actionCasingCapitalize">
+   <property name="icon">
+    <iconset resource="../icons/icons.qrc">
+     <normaloff>:/icons/format-case-capitalize.svg</normaloff>:/icons/format-case-capitalize.svg</iconset>
+   </property>
+   <property name="text">
+    <string>&amp;Capitalize</string>
+   </property>
+   <property name="toolTip">
+    <string>Capitalize only the first word of the selected text.</string>
+   </property>
+  </action>
+
+  <action name="actionExit">
+   <property name="icon">
+    <iconset resource="./icons/icons.qrc">
+     <normaloff>:/icons/process-stop.svg</normaloff>:/icons/process-stop.svg</iconset>
+   </property>
+   <property name="text">
+    <string>&amp;Quit</string>
+   </property>
+   <property name="toolTip">
+    <string>Quit</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+Q</string>
+   </property>
+  </action>
+
+  <action name="actionInsertSpecialCharacter">
+   <property name="icon">
+    <iconset resource="./icons/icons.qrc">
+     <normaloff>:/icons/insert-special-character.svg</normaloff>:/icons/insert-special-character.svg</iconset>
+   </property>
+   <property name="text">
+    <string>&amp;Special Character...</string>
+   </property>
+   <property name="toolTip">
+    <string>Select a character to insert into your text.</string>
+   </property>
+  </action>
+
+  <action name="actionInsertNumberedList">
+   <property name="checkable">
+    <bool>false</bool>
+   </property>
+   <property name="icon">
+    <iconset resource="./icons/icons.qrc">
+     <normaloff>:/icons/insert-numbered-list.svg</normaloff>:/icons/insert-numbered-list.svg</iconset>
+   </property>
+   <property name="text">
+    <string>&amp;Numbered List</string>
+   </property>
+   <property name="toolTip">
+    <string>Create a numbered list from selection.</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+Shift+N</string>
+   </property>
+  </action>
+
+  <action name="actionInsertBulletedList">
+   <property name="checkable">
+    <bool>false</bool>
+   </property>
+   <property name="icon">
+    <iconset resource="./icons/icons.qrc">
+     <normaloff>:/icons/insert-bullet-list.svg</normaloff>:/icons/insert-bullet-list.svg</iconset>
+   </property>
+   <property name="text">
+    <string>Bulle&amp;ted List</string>
+   </property>
+   <property name="toolTip">
+    <string>Create a bulleted list from selection.</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+Shift+L</string>
+   </property>
+  </action>
+
+  <action name="actionStrikethrough">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="icon">
+    <iconset resource="./icons/icons.qrc">
+     <normaloff>:/icons/format-text-strikethrough.svg</normaloff>:/icons/format-text-strikethrough.svg</iconset>
+   </property>
+   <property name="text">
+    <string>Stri&amp;kethrough</string>
+   </property>
+   <property name="toolTip">
+    <string>Draw a line through the selected text.</string>
+   </property>
+  </action>
+
+  <action name="actionSubscript">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="icon">
+    <iconset resource="./icons/icons.qrc">
+     <normaloff>:/icons/format-text-subscript.svg</normaloff>:/icons/format-text-subscript.svg</iconset>
+   </property>
+   <property name="text">
+    <string>&amp;Subscript</string>
+   </property>
+   <property name="toolTip">
+    <string>Set the selected text slightly smaller and below the normal line.</string>
+   </property>
+  </action>
+
+  <action name="actionSuperscript">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="icon">
+    <iconset resource="./icons/icons.qrc">
+     <normaloff>:/icons/format-text-superscript.svg</normaloff>:/icons/format-text-superscript.svg</iconset>
+   </property>
+   <property name="text">
+    <string>Su&amp;perscript</string>
+   </property>
+   <property name="toolTip">
+    <string>Set the selected text slightly smaller and above the normal line.</string>
+   </property>
+  </action>
+
+
+  <action name="actionZoomIn">
+   <property name="icon">
+    <iconset resource="./icons/icons.qrc">
+     <normaloff>:/icons/list-add.svg</normaloff>:/icons/list-add.svg</iconset>
+   </property>
+   <property name="text">
+    <string>Zoom &amp;In</string>
+   </property>
+   <property name="toolTip">
+    <string>Zoom In</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+=</string>
+   </property>
+  </action>
+  
+  
+  <action name="actionZoomOut">
+   <property name="icon">
+    <iconset resource="./icons/icons.qrc">
+     <normaloff>:/icons/list-remove.svg</normaloff>:/icons/list-remove.svg</iconset>
+   </property>
+   <property name="text">
+    <string>Zoom &amp;Out</string>
+   </property>
+   <property name="toolTip">
+    <string>Zoom Out</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+-</string>
+   </property>
+  </action>
+
+
+  <action name="actionIncreaseIndent">
+   <property name="icon">
+    <iconset resource="./icons/icons.qrc">
+     <normaloff>:/icons/format-indent-more.svg</normaloff>:/icons/format-indent-more.svg</iconset>
+   </property>
+   <property name="text">
+    <string>Incre&amp;ase Indent</string>
+   </property>
+   <property name="toolTip">
+    <string>Increase the indent level of the paragraph.</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+Alt+M</string>
+   </property>
+  </action>
+
+  <action name="actionDecreaseIndent">
+   <property name="icon">
+    <iconset resource="./icons/icons.qrc">
+     <normaloff>:/icons/format-indent-less.svg</normaloff>:/icons/format-indent-less.svg</iconset>
+   </property>
+   <property name="text">
+    <string>&amp;Decrease Indent</string>
+   </property>
+   <property name="toolTip">
+    <string>Decrease the indent level of the paragraph.</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+Shift+M</string>
+   </property>
+  </action>
+
+  <action name="actionInsertSGFSectionMarker">
+   <property name="icon">
+    <iconset resource="./icons/icons.qrc">
+     <normaloff>:/icons/split-section.svg</normaloff>:/icons/split-section.svg</iconset>
+   </property>
+   <property name="text">
+    <string>Split &amp;Marker</string>
+   </property>
+   <property name="toolTip">
+    <string>Insert Sigil split file marker</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+Shift+Return</string>
+   </property>
+  </action>
+
+  <action name="actionPreferences">
+   <property name="text">
+    <string>&amp;Preferences...</string>
+   </property>
+   <property name="shortcut">
+    <string>F5</string>
+   </property>
+  </action>
+  
+  <action name="actionZoomReset">
+   <property name="text">
+    <string>&amp;Zoom Reset</string>
+   </property>
+   <property name="toolTip">
+    <string>Zoom Reset</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+0</string>
+   </property>
+  </action>
+    
+  <action name="actionHeading1">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="icon">
+    <iconset resource="./icons/icons.qrc">
+     <normaloff>:/icons/heading-1.svg</normaloff>:/icons/heading-1.svg</iconset>
+   </property>
+   <property name="text">
+    <string>Heading &amp;1</string>
+   </property>
+   <property name="toolTip">
+    <string>Format paragraph as a level 1 heading.</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+1</string>
+   </property>
+  </action>
+
+  <action name="actionHeading2">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="icon">
+    <iconset resource="./icons/icons.qrc">
+     <normaloff>:/icons/heading-2.svg</normaloff>:/icons/heading-2.svg</iconset>
+   </property>
+   <property name="text">
+    <string>Heading &amp;2</string>
+   </property>
+   <property name="toolTip">
+    <string>Format paragraph as a level 2 heading.</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+2</string>
+   </property>
+  </action>
+
+  <action name="actionHeading3">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="icon">
+    <iconset resource="./icons/icons.qrc">
+     <normaloff>:/icons/heading-3.svg</normaloff>:/icons/heading-3.svg</iconset>
+   </property>
+   <property name="text">
+    <string>Heading &amp;3</string>
+   </property>
+   <property name="toolTip">
+    <string>Format paragraph as a level 3 heading.</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+3</string>
+   </property>
+  </action>
+  
+  
+  <action name="actionHeading4">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="icon">
+    <iconset resource="./icons/icons.qrc">
+     <normaloff>:/icons/heading-4.svg</normaloff>:/icons/heading-4.svg</iconset>
+   </property>
+   <property name="text">
+    <string>Heading &amp;4</string>
+   </property>
+   <property name="toolTip">
+    <string>Format paragraph as a level 4 heading.</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+4</string>
+   </property>
+  </action>
+
+  <action name="actionHeading5">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="icon">
+    <iconset resource="./icons/icons.qrc">
+     <normaloff>:/icons/heading-5.svg</normaloff>:/icons/heading-5.svg</iconset>
+   </property>
+   <property name="text">
+    <string>Heading &amp;5</string>
+   </property>
+   <property name="toolTip">
+    <string>Format paragraph as a level 5 heading.</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+5</string>
+   </property>
+  </action>
+  
+  <action name="actionHeading6">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="icon">
+    <iconset resource="./icons/icons.qrc">
+     <normaloff>:/icons/heading-6.svg</normaloff>:/icons/heading-6.svg</iconset>
+   </property>
+   <property name="text">
+    <string>Heading &amp;6</string>
+   </property>
+   <property name="toolTip">
+    <string>Format paragraph as a level 6 heading.</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+6</string>
+   </property>
+  </action>
+
+
+  <action name="actionHeadingNormal">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="icon">
+    <iconset resource="./icons/icons.qrc">
+     <normaloff>:/icons/heading-normal.svg</normaloff>:/icons/heading-normal.svg</iconset>
+   </property>
+   <property name="text">
+    <string>&amp;Normal</string>
+   </property>
+   <property name="toolTip">
+    <string>Format paragraph as a normal paragraph.</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+7</string>
+   </property>
+  </action>
+
+
+  <action name="actionHeadingPreserveAttributes">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>&amp;Preserve Existing Attributes</string>
+   </property>
+   <property name="toolTip">
+    <string>When applying this style, preserve any existing attributes on the tag</string>
+   </property>
+  </action>
+
+  <action name="actionSelectAll">
+   <property name="icon">
+    <iconset resource="./icons/icons.qrc">
+     <normaloff>:/icons/edit-select-all.svg</normaloff>:/icons/edit-select-all.svg</iconset>
+   </property>
+   <property name="text">
+    <string>&amp;Select All</string>
+   </property>
+   <property name="toolTip">
+    <string>Select all text in the document.</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+A</string>
+   </property>
+  </action>
+
+  <action name="actionInspect">
+   <property name="icon">
+    <iconset resource="./icons/icons.qrc">
+     <normaloff>:/icons/inspect.svg</normaloff>:/icons/inspect.svg</iconset>
+   </property>
+   <property name="text">
+    <string>&amp;Inspector</string>
+   </property>
+   <property name="toolTip">
+    <string>Inspect the page.</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+F5</string>
+   </property>
+  </action>
+
+  <action name="actionClips">
+   <property name="text">
+    <string>Clips</string>
+   </property>
+   <property name="toolTip">
+    <string>Apply clips to page.</string>
+   </property>
+   <property name="shortcut">
+    <string></string>
+   </property>
+  </action>
+
+  <action name="actionClipEdit">
+   <property name="text">
+    <string>ClipEditor ...</string>
+   </property>
+   <property name="toolTip">
+    <string>Edit and Create Clips.</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+Alt+C</string>
+   </property>
+  </action>
+
+  <action name="actionClipBar">
+   <property name="text">
+    <string>ClipBar Show/Hide</string>
+   </property>
+   <property name="toolTip">
+    <string>Show and Hide the Clip Toolbar.</string>
+   </property>
+   <property name="shortcut">
+    <string></string>
+   </property>
+  </action>
+
+  <action name="actionFind">
+   <property name="icon">
+    <iconset resource="./icons/icons.qrc">
+     <normaloff>:/icons/edit-find.svg</normaloff>:/icons/edit-find.svg</iconset>
+   </property>
+   <property name="text">
+    <string>Find &amp; Replace...</string>
+   </property>
+   <property name="toolTip">
+    <string>Find and replace text</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+F</string>
+   </property>
+  </action>
+
+  <action name="actionFindNext">
+   <property name="text">
+    <string>Find &amp;Next</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+G</string>
+   </property>
+  </action>
+
+  <action name="actionFindPrevious">
+   <property name="text">
+    <string>Find &amp;Previous</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+Shift+G</string>
+   </property>
+  </action>
+
+  <action name="actionReplaceCurrent">
+   <property name="text">
+    <string>Replace</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+R</string>
+   </property>
+  </action>
+
+  <action name="actionReplaceNext">
+   <property name="text">
+    <string>&amp;Replace/Find Next</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+]</string>
+   </property>
+  </action>
+
+  <action name="actionReplacePrevious">
+   <property name="text">
+    <string>R&amp;eplace/Find Previous</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+[</string>
+   </property>
+  </action>
+
+  <action name="actionReplaceAll">
+   <property name="text">
+    <string>Replace &amp;All</string>
+   </property>
+   <property name="shortcut">
+    <string>Alt+A</string>
+   </property>
+  </action>
+
+  <action name="actionCount">
+   <property name="text">
+    <string>&amp;Count All</string>
+   </property>
+   <property name="shortcut">
+    <string>Alt+C</string>
+   </property>
+  </action>
+
+  <action name="actionFindNextInFile">
+   <property name="text">
+    <string>Find &amp;Next In File</string>
+   </property>
+  </action>
+
+  <action name="actionReplaceNextInFile">
+   <property name="text">
+    <string>&amp;Replace Next In File</string>
+   </property>
+  </action>
+
+  <action name="actionReplaceAllInFile">
+   <property name="text">
+    <string>Replace &amp;All In File</string>
+   </property>
+  </action>
+
+  <action name="actionCountInFile">
+   <property name="text">
+    <string>&amp;Count All In File</string>
+   </property>
+  </action>
+
+  <action name="actionNext">
+   <property name="checkable">
+    <bool>false</bool>
+   </property>
+   <property name="icon">
+    <iconset resource="./icons/icons.qrc">
+     <normaloff>:/icons/arrow-right.svg</normaloff>:/icons/arrow-right.svg</iconset>
+   </property>
+   <property name="text">
+    <string>Next XHtml File</string>
+   </property>
+   <property name="toolTip">
+    <string>Next file in navigation list</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+PgDown</string>
+   </property>
+  </action>
+
+  <action name="actionPrev">
+   <property name="checkable">
+    <bool>false</bool>
+   </property>
+   <property name="icon">
+    <iconset resource="./icons/icons.qrc">
+     <normaloff>:/icons/arrow-left.svg</normaloff>:/icons/arrow-left.svg</iconset>
+   </property>
+   <property name="text">
+    <string>Previous XHtml File</string>
+   </property>
+   <property name="toolTip">
+    <string>Previous file in navigation list</string>
+   </property>
+   <property name="shortcut">
+     <string>Ctrl+PgUp</string>
+   </property>
+  </action>
+
+  <action name="actionMode">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="icon">
+    <iconset resource="./icons/icons.qrc">
+     <normaloff>:/icons/mode-preview.svg</normaloff>:/icons/mode-edit.svg</iconset>
+   </property>
+   <property name="text">
+    <string>Mode</string>
+   </property>
+   <property name="toolTip">
+    <string>Toggle between Edit and Preview Modes.</string>
+   </property>
+  </action>
+
+  <action name="actionAbout">
+   <property name="icon">
+    <iconset resource="./icons/icons.qrc">
+     <normaloff>:/icons/help-browser.svg</normaloff>:/main/help-browser.svg</iconset>
+   </property>
+   <property name="text">
+    <string>About...</string>
+   </property>
+   <property name="toolTip">
+    <string>Show information about PageEdit.</string>
+   </property>
+  </action>
+
+  <action name="actionLinkReturn">
+   <property name="icon">
+    <iconset resource="./icons/icons.qrc">
+     <normaloff>:/icons/back-link.svg</normaloff>:/icons/back-link.svg</iconset>
+   </property>
+   <property name="text">
+    <string>Back to Last Link</string>
+   </property>
+   <property name="toolTip">
+    <string>Return from the last link taken</string>
+   </property>
+  </action>
+
+  <action name="actionInsertId">
+   <property name="icon">
+    <iconset resource="./icons/icons.qrc">
+     <normaloff>:/icons/insert-id.svg</normaloff>:/icons/insert-id.svg</iconset>
+   </property>
+   <property name="text">
+    <string>I&amp;D...</string>
+   </property>
+   <property name="toolTip">
+    <string>Insert or edit an anchor with an ID name to use as a link target.</string>
+   </property>
+  </action>
+  
+  <action name="actionInsertHyperlink">
+   <property name="icon">
+    <iconset resource="./icons/icons.qrc">
+     <normaloff>:/icons/insert-hyperlink.svg</normaloff>:/icons/insert-hyperlink.svg</iconset>
+   </property>
+   <property name="text">
+    <string>&amp;Link...</string>
+   </property>
+   <property name="toolTip">
+    <string>Insert or edit an anchor with a hyperlink to a target.</string>
+   </property>
+  </action>
+
+  <action name="actionInsertFile">
+   <property name="icon">
+    <iconset resource="./icons/icons.qrc">
+     <normaloff>:/icons/insert-image.svg</normaloff>:/icons/insert-image.svg</iconset>
+   </property>
+   <property name="text">
+    <string>&amp;File...</string>
+   </property>
+   <property name="toolTip">
+    <string>Select existing image, video or audio files from your book to insert into the text.</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+Shift+I</string>
+   </property>
+  </action>
+
+  <action name="actionClip1">
+   <property name="text">
+    <string>Clip &amp;1</string>
+   </property>
+   <property name="toolTip">
+    <string>Insert Clip 1</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+Alt+1</string>
+   </property>
+  </action>
+
+  <action name="actionClip2">
+   <property name="text">
+    <string>Clip &amp;2</string>
+   </property>
+   <property name="toolTip">
+    <string>Insert Clip 2</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+Alt+2</string>
+   </property>
+  </action>
+
+  <action name="actionClip3">
+   <property name="text">
+    <string>Clip &amp;3</string>
+   </property>
+   <property name="toolTip">
+    <string>Insert Clip 3</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+Alt+3</string>
+   </property>
+  </action>
+
+  <action name="actionClip4">
+   <property name="text">
+    <string>Clip &amp;4</string>
+   </property>
+   <property name="toolTip">
+    <string>Insert Clip 4</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+Alt+4</string>
+   </property>
+  </action>
+
+  <action name="actionClip5">
+   <property name="text">
+    <string>Clip &amp;5</string>
+   </property>
+   <property name="toolTip">
+    <string>Insert Clip 5</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+Alt+5</string>
+   </property>
+  </action>
+  
+  <action name="actionClip6">
+   <property name="text">
+    <string>Clip &amp;6</string>
+   </property>
+   <property name="toolTip">
+    <string>Insert Clip 6</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+Alt+6</string>
+   </property>
+  </action>
+  
+  <action name="actionClip7">
+   <property name="text">
+    <string>Clip &amp;7</string>
+   </property>
+   <property name="toolTip">
+    <string>Insert Clip 7</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+Alt+7</string>
+   </property>
+  </action>
+  
+  <action name="actionClip8">
+   <property name="text">
+    <string>Clip &amp;8</string>
+   </property>
+   <property name="toolTip">
+    <string>Insert Clip 8</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+Alt+8</string>
+   </property>
+  </action>
+  
+  <action name="actionClip9">
+   <property name="text">
+    <string>Clip &amp;9</string>
+   </property>
+   <property name="toolTip">
+    <string>Insert Clip 9</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+Alt+9</string>
+   </property>
+  </action>
+  
+  <action name="actionClip10">
+   <property name="text">
+    <string>Clip 1&amp;0</string>
+   </property>
+   <property name="toolTip">
+    <string>Insert Clip 10</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+Alt+0</string>
+   </property>
+  </action>
+  
+  <action name="actionClip11">
+   <property name="text">
+    <string>Clip 11</string>
+   </property>
+   <property name="toolTip">
+    <string>Insert Clip 11</string>
+   </property>
+  </action>
+  
+  <action name="actionClip12">
+   <property name="text">
+    <string>Clip 12</string>
+   </property>
+   <property name="toolTip">
+    <string>Insert Clip 12</string>
+   </property>
+  </action>
+  
+  <action name="actionClip13">
+   <property name="text">
+    <string>Clip 13</string>
+   </property>
+   <property name="toolTip">
+    <string>Insert Clip 13</string>
+   </property>
+  </action>
+  
+  <action name="actionClip14">
+   <property name="text">
+    <string>Clip 14</string>
+   </property>
+   <property name="toolTip">
+    <string>Insert Clip 14</string>
+   </property>
+  </action>
+  
+  <action name="actionClip15">
+   <property name="text">
+    <string>Clip 15</string>
+   </property>
+   <property name="toolTip">
+    <string>Insert Clip 15</string>
+   </property>
+  </action>
+  
+  <action name="actionClip16">
+   <property name="text">
+    <string>Clip 16</string>
+   </property>
+   <property name="toolTip">
+    <string>Insert Clip 16</string>
+   </property>
+  </action>
+  
+  <action name="actionClip17">
+   <property name="text">
+    <string>Clip 17</string>
+   </property>
+   <property name="toolTip">
+    <string>Insert Clip 17</string>
+   </property>
+  </action>
+  
+  <action name="actionClip18">
+   <property name="text">
+    <string>Clip 18</string>
+   </property>
+   <property name="toolTip">
+    <string>Insert Clip 18</string>
+   </property>
+  </action>
+  
+  <action name="actionClip19">
+   <property name="text">
+    <string>Clip 19</string>
+   </property>
+   <property name="toolTip">
+    <string>Insert Clip 19</string>
+   </property>
+  </action>
+  
+  <action name="actionClip20">
+   <property name="text">
+    <string>Clip 20</string>
+   </property>
+   <property name="toolTip">
+    <string>Insert Clip 20</string>
+   </property>
+  </action>
+
+  
+ </widget>
+ <resources>
+  <include location="./icons/icons.qrc"/>
+ </resources>
+ <connections/>
+</ui>

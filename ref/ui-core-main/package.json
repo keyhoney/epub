@@ -1,0 +1,56 @@
+{
+  "name": "@opkle/ui-core",
+  "version": "0.1.0",
+  "description": "Vanilla TypeScript UI core and DOM utility layer powering Opkle editor.",
+  "author": "Opkle <help@opkle.app>",
+  "license": "MIT",
+  "homepage": "https://opkle.app",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/opkle-app/ui-core.git"
+  },
+  "bugs": {
+    "url": "https://github.com/opkle-app/ui-core/issues"
+  },
+  "type": "module",
+  "sideEffects": false,
+  "main": "./dist/index.js",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    },
+    "./publicDictionary": {
+      "types": "./dist/publicDictionary.d.ts",
+      "import": "./dist/publicDictionary.js"
+    },
+    "./package.json": "./package.json"
+  },
+  "files": [
+    "dist",
+    "src",
+    "README.md",
+    "LICENSE"
+  ],
+  "keywords": [
+    "dom",
+    "typescript",
+    "vanilla-js",
+    "frontend",
+    "ui-core",
+    "utility",
+    "opkle",
+    "opkle-editor"
+  ],
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "typecheck": "tsc --noEmit -p tsconfig.json",
+    "prepack": "npm run build",
+    "pack:check": "npm pack --dry-run"
+  },
+  "devDependencies": {
+    "typescript": "^5.8.3"
+  }
+}

@@ -1,0 +1,127 @@
+<html>
+<head>
+
+    <title>preview</title>
+    <link rel="stylesheet" href="css/textmate.css">
+    <style type="text/css">
+
+    ul, ol {
+        padding: 0 0 0 1em;
+    }
+    
+    pre, code {
+        border: 1px solid #ddd;
+        border-radius: 2px;
+        background-color: #f9f9fa;
+        color: #111;
+    }
+
+    pre {
+        overflow: auto;
+    }
+    
+    pre ol {
+        margin: 0.4em 0.4em 0.4em 3.2em;
+        padding: 0;
+    }
+
+    pre span {
+        white-space: nowrap;
+    }
+
+    p {
+        text-indent: 1em;
+    }
+
+blockquote {
+margin: 1em 0;
+padding: 0.5em 1em;
+border-left: 0.5em solid rgba(0, 0, 0, 0.1);
+background-color: rgba(0, 0, 0, 0.04);
+color: #111;
+}
+    section > h1 {
+
+    }
+    #viewer {
+        margin: 1em;
+    }
+
+    #viewer > section > h1 {
+
+    }
+
+    #viewer > section > section > h1, #viewer > section > section > section > h1{
+        
+    }
+
+    #viewer > section > section > section > h1{
+        
+    }
+
+    #viewer > section > section > section > section > h1{
+        
+    }
+
+    #viewer > section > section > section > section > section > h1{
+        
+    }
+
+    #viewer > section > section > section > section > section > section > h1{
+        
+    }
+    </style>
+    <script src="js/ace.js"></script>
+    <script src="js/mode-markdown.js"></script>
+    <script src="js/markdown.js"></script>
+    <script src="js/markdown.html5.js"></script>
+    <script src="js/markdown.gfm.js"></script>
+    <script src="js/ace.highlight.js"></script>
+    <script type="text/javascript">
+    window.onload = function () {
+        
+        var viewer = document.getElementById('viewer');
+        var origin = location.protocol + '//' + location.host;
+
+
+        window.addEventListener("message", function (e) {
+            console.log(e);
+            if (e.origin !== origin) return;
+
+            var data = e.data;
+            if (data.size) resizeWindow(data.size);
+            if (data.preview) updatePreview(data.preview);
+            if (data.scroll) updateScroll(data.scroll);
+        }, false);
+
+        function resizeWindow (size) {
+            window.resizeTo(size.x, size.y);
+        }
+
+        function updatePreview (preview) {
+            setTimeout(function function_name (argument) {
+                viewer.innerHTML = markdown.toHTML5(preview, 'GFM', {theme: 'ace-tm'});
+                var codes = viewer.querySelectorAll('pre[class^=lang]');
+                [].forEach.call(codes, function(v) {
+                    var code = v.querySelector('code');
+                    var lang = v.getAttribute('class').match(/lang-([a-zA-Z+]*)/)[1] || 'javascript';
+                    if(lang === 'c' || lang === 'cpp') lang = 'c_cpp';
+                    var node = ace.highlight(code.innerHTML, 'ace/mode/' + lang, 'ace-tm');
+                    v.innerHTML = node.innerHTML;
+                });
+            }, 0);
+
+        }
+
+        function updateScroll (scroll) {
+            document.body.scrollTop = ~~(document.body.scrollHeight * scroll);
+        }
+
+        window.opener.postMessage('ready', origin);
+    };
+    </script>
+</head>
+<body>
+<div id="viewer"></div>
+</body>
+</html>

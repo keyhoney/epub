@@ -39,16 +39,26 @@ export default function Image() {
             marginBottom: '12px',
           }}
         >
+          코딩 없이 하는 전자책 만들기
+        </div>
+        <div
+          style={{
+            fontSize: '32px',
+            color: 'rgba(255,255,255,0.75)',
+            fontWeight: 400,
+            marginBottom: '8px',
+          }}
+        >
           ePub Studio
         </div>
         <div
           style={{
-            fontSize: '28px',
-            color: 'rgba(255,255,255,0.85)',
-            fontWeight: 400,
+            fontSize: '22px',
+            color: 'rgba(255,255,255,0.9)',
+            fontWeight: 500,
           }}
         >
-          EPUB 3.0 온라인 에디터
+          무료 EPUB 3.0 온라인 에디터 · 부업 추천
         </div>
       </div>
     ),

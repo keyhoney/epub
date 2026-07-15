@@ -1,0 +1,34 @@
+# yaml-language-server: $schema=https://aka.ms/winget-manifest.installer.1.10.0.schema.json
+
+PackageIdentifier: Sigil-Ebook.PageEdit
+PackageVersion: <VERSION>
+Platform:
+- Windows.Desktop
+MinimumOSVersion: 10.0.17763.0
+InstallerType: inno
+Scope: machine
+InstallModes:
+- interactive
+- silent
+- silentWithProgress
+InstallerSwitches:
+  Upgrade: /NORESTART /SUPPRESSMSGBOXES /COMPONENTS="dicon"
+UpgradeBehavior: install
+FileExtensions:
+- xhtml
+- opf
+Dependencies:
+  PackageDependencies:
+  - PackageIdentifier: Microsoft.VCRedist.2015+.x64
+Commands:
+- pageedit
+Installers:
+- Architecture: x64
+  ElevationRequirement: elevatesSelf
+  InstallerUrl: https://github.com/Sigil-Ebook/PageEdit/releases/download/<VERSION>/PageEdit-<VERSION>-Windows-x64-Setup.exe
+  InstallerSha256: <HASH-AMD64>
+  InstallerSwitches:
+    Custom: /ALLUSERS /NORESTART /SUPPRESSMSGBOXES /COMPONENTS="dicon"
+ReleaseDate: <DATE>
+ManifestType: installer
+ManifestVersion: 1.10.0

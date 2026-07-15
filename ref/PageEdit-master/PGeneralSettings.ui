@@ -1,0 +1,350 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>GeneralSettings</class>
+ <widget class="QWidget" name="GeneralSettings">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>400</width>
+    <height>300</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>General Settings</string>
+  </property>
+  <layout class="QVBoxLayout" name="verticalLayout">
+   <property name="leftMargin">
+    <number>6</number>
+   </property>
+   <property name="topMargin">
+    <number>0</number>
+   </property>
+   <property name="rightMargin">
+    <number>0</number>
+   </property>
+   <property name="bottomMargin">
+    <number>0</number>
+   </property>
+
+   <item>
+    <layout class="QHBoxLayout" name="horizontalLayout" stretch="0,0">
+     <item>
+      <layout class="QGridLayout" name="gridLayout">
+       <item row="0" column="0">
+        <widget class="QLabel" name="label_ui">
+         <property name="toolTip">
+          <string>You must restart PageEdit after changing the User Interface language.
+
+If a translation for specific word or phrase is not available it will be displayed in English.</string>
+         </property>
+         <property name="text">
+          <string>User Interface Language:</string>
+         </property>
+        </widget>
+       </item>
+       <item row="0" column="1">
+        <widget class="QComboBox" name="cbUILanguage"/>
+       </item>
+      </layout>
+     </item>
+     <item>
+      <spacer name="horizontalSpacer">
+       <property name="orientation">
+        <enum>Qt::Horizontal</enum>
+       </property>
+       <property name="sizeHint" stdset="0">
+        <size>
+         <width>30</width>
+         <height>20</height>
+        </size>
+       </property>
+      </spacer>
+     </item>
+    </layout>
+   </item>
+
+   <item>
+    <layout class="QHBoxLayout" name="horizontalLayoutD" stretch="0,0">
+     <item>
+      <layout class="QGridLayout" name="gridLayoutD">
+       <item row="0" column="0">
+        <widget class="QLabel" name="label_D">
+         <property name="toolTip">
+          <string>Select from installed spellcheck dictionaries.</string>
+         </property>
+         <property name="text">
+          <string>Spellcheck Dictionary:</string>
+         </property>
+        </widget>
+       </item>
+       <item row="0" column="1">
+        <widget class="QComboBox" name="cbUIDictionary"/>
+       </item>
+      </layout>
+     </item>
+     <item>
+      <spacer name="horizontalSpacerD">
+       <property name="orientation">
+        <enum>Qt::Horizontal</enum>
+       </property>
+       <property name="sizeHint" stdset="0">
+        <size>
+         <width>30</width>
+         <height>20</height>
+        </size>
+       </property>
+      </spacer>
+     </item>
+    </layout>
+   </item>
+
+   <item>
+    <spacer name="verticalSpacer1">
+     <property name="orientation">
+      <enum>Qt::Vertical</enum>
+     </property>
+     <property name="sizeHint" stdset="0">
+      <size>
+       <width>10</width>
+       <height>20</height>
+      </size>
+     </property>
+    </spacer>
+   </item>
+
+   <item>
+    <widget class="QGroupBox" name="groupBox_1">
+     <property name="toolTip">
+      <string>Determine if html files are allowed to access non-multimedia remote resources.</string>
+     </property>
+     <property name="title">
+      <string> Control access by html files to non-multimedia remote resources.</string>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
+     </property>
+     <layout class="QGridLayout" name="gridLayout_3">
+      <item row="0" column="0">
+       <widget class="QCheckBox" name="AllowRemote">
+        <property name="toolTip">
+         <string>Check to allow html files to access non-multimedia remote resources.</string>
+        </property>
+        <property name="text">
+         <string>Html files may access all remote resources types.</string>
+        </property>
+        <property name="checked">
+         <bool>false</bool>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </widget>
+   </item>
+   <item>
+    <spacer name="verticalSpacer2">
+     <property name="orientation">
+      <enum>Qt::Vertical</enum>
+     </property>
+     <property name="sizeHint" stdset="0">
+      <size>
+       <width>10</width>
+       <height>20</height>
+      </size>
+     </property>
+    </spacer>
+   </item>
+   
+   <item>
+    <widget class="QGroupBox" name="groupBox_2">
+     <property name="toolTip">
+      <string>Determine if javascript is allowed to be used by html files</string>
+     </property>
+     <property name="title">
+      <string> Control use of javascript by html files.</string>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
+     </property>
+     <layout class="QGridLayout" name="gridLayout_3a">
+      <item row="0" column="0">
+       <widget class="QCheckBox" name="AllowJavascript">
+        <property name="toolTip">
+         <string>Check to allow html files to use javascript.</string>
+        </property>
+        <property name="text">
+         <string>Html files may use javascript.</string>
+        </property>
+        <property name="checked">
+         <bool>false</bool>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </widget>
+   </item>
+
+   <item>
+    <spacer name="verticalSpacer3">
+     <property name="orientation">
+      <enum>Qt::Vertical</enum>
+     </property>
+     <property name="sizeHint" stdset="0">
+      <size>
+       <width>10</width>
+       <height>20</height>
+      </size>
+     </property>
+    </spacer>
+   </item>
+
+   <item>
+    <widget class="QGroupBox" name="groupBoxA">
+     <property name="toolTip">
+      <string>Choose how you would like PageEdit to handle the use of multiple white space characters during editing.</string>
+     </property>
+     <property name="title">
+      <string>Handle multiple white space layout using:</string>
+     </property>
+     <layout class="QVBoxLayout" name="verticalLayoutB">
+      <item>
+       <widget class="QRadioButton" name="UseWSPreWrap">
+        <property name="toolTip">
+         <string>Use CSS white-space: pre-wrap</string>
+        </property>
+        <property name="text">
+         <string>css white-space: pre-wrap</string>
+        </property>
+        <property name="checked">
+         <bool>true</bool>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QRadioButton" name="UseNBSp">
+        <property name="toolTip">
+         <string>Use non-breaking spaces as needed</string>
+        </property>
+        <property name="text">
+         <string>non-breaking spaces as needed</string>
+        </property>
+        <property name="checked">
+         <bool>false</bool>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </widget>
+   </item>
+
+   <item>
+    <spacer name="verticalSpacer4">
+     <property name="orientation">
+      <enum>Qt::Vertical</enum>
+     </property>
+     <property name="sizeHint" stdset="0">
+      <size>
+       <width>10</width>
+       <height>20</height>
+      </size>
+     </property>
+    </spacer>
+   </item>
+
+   <item>
+    <widget class="QGroupBox" name="groupBoxB">
+     <property name="toolTip">
+      <string>Determine if Prettify is used when saving</string>
+     </property>
+     <property name="title">
+      <string> Use Prettify to reformat the xhtml when saving.</string>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
+     </property>
+     <layout class="QGridLayout" name="gridLayout_3B">
+      <item row="0" column="0">
+       <widget class="QCheckBox" name="UsePrettify">
+        <property name="toolTip">
+         <string>Check to reformat with Prettify when saving xhtml files.</string>
+        </property>
+        <property name="text">
+         <string>Use Prettify to reformat xhtml when saving.</string>
+        </property>
+        <property name="checked">
+         <bool>false</bool>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </widget>
+   </item>
+
+   <item>
+    <spacer name="verticalSpacer5">
+     <property name="orientation">
+      <enum>Qt::Vertical</enum>
+     </property>
+     <property name="sizeHint" stdset="0">
+      <size>
+       <width>10</width>
+       <height>20</height>
+      </size>
+     </property>
+    </spacer>
+   </item>
+
+   <item>
+    <widget class="QGroupBox" name="groupBox_gpu">
+     <property name="toolTip">
+      <string>Disable GPU Acceleration in PageEdit/QtWebEngine</string>
+     </property>
+     <property name="title">
+      <string> Disable GPU Acceleration in PageEdit/QtWebEngine.</string>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
+     </property>
+     <layout class="QHBoxLayout" name="horizontalLayout_gpu">
+      <item>
+       <widget class="QCheckBox" name="DisableGPU">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
+        <property name="toolTip">
+         <string>Disable GPU Acceleration in PageEdit/QtWebEngine.</string>
+        </property>
+        <property name="text">
+         <string>Disable GPU Acceleration in PageEdit/QtWebEngine.</string>
+        </property>
+        <property name="checked">
+         <bool>false</bool>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </widget>
+   </item>
+
+   <item>
+    <spacer name="verticalSpacer">
+     <property name="orientation">
+      <enum>Qt::Vertical</enum>
+     </property>
+     <property name="sizeHint" stdset="0">
+      <size>
+       <width>20</width>
+       <height>50</height>
+      </size>
+     </property>
+    </spacer>
+   </item>
+
+  </layout>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>
