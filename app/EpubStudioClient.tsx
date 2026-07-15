@@ -9,7 +9,6 @@ import { estimateDataUrlSize } from '@/lib/epub/extractImages';
 import { ProjectFileActions } from '@/components/editor/ProjectFileActions';
 import {
   WelcomeDialog,
-  ONBOARDING_STORAGE_KEY,
 } from '@/components/onboarding/WelcomeDialog';
 import { BookTemplateDialog } from '@/components/onboarding/BookTemplateDialog';
 import type { BookTemplateId } from '@/lib/templates/bookTemplates';
@@ -91,9 +90,7 @@ export default function EpubStudioClient() {
 
   useEffect(() => {
     if (!isLoaded) return;
-    if (!localStorage.getItem(ONBOARDING_STORAGE_KEY)) {
-      setShowWelcome(true);
-    }
+    setShowWelcome(true);
   }, [isLoaded]);
 
   useEffect(() => {

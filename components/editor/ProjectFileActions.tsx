@@ -33,7 +33,7 @@ export function ProjectFileActions({
         type="button"
         onClick={onSaveToFile}
         disabled={disabled}
-        aria-label="작업 파일"
+        aria-label="작업 저장하기"
         title="나중에 이어서 쓰려면 이 파일을 보관하세요"
         className={cn(
           'px-3 py-1.5 bg-white text-slate-700 rounded-md text-sm font-medium hover:bg-slate-50 shadow-sm transition-colors cursor-pointer flex items-center gap-1.5 border border-slate-200 disabled:opacity-50 disabled:cursor-not-allowed',
@@ -41,7 +41,7 @@ export function ProjectFileActions({
         )}
       >
         <Save className="w-4 h-4" />
-        작업 파일
+        작업 저장하기
       </button>
       <button
         type="button"
