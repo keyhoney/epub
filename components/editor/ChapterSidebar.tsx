@@ -16,7 +16,7 @@ import {
   verticalListSortingStrategy,
 } from '@dnd-kit/sortable';
 import { CSS } from '@dnd-kit/utilities';
-import { GripVertical, Plus, Trash2 } from 'lucide-react';
+import { GripVertical, Plus, Pencil, Trash2 } from 'lucide-react';
 import type {
   BookMetadata,
   Chapter,
@@ -107,6 +107,17 @@ function SortableChapterItem({
         aria-label="장 제목"
         className="flex-1 min-w-0 text-sm bg-transparent border-none outline-none focus:ring-1 focus:ring-blue-300 rounded px-1"
       />
+      <button
+        type="button"
+        aria-label={`${chapter.title} 장 편집`}
+        onClick={(e) => {
+          e.stopPropagation();
+          onSelect();
+        }}
+        className="p-1 text-slate-400 hover:text-blue-600 hover:bg-blue-50 rounded transition-colors"
+      >
+        <Pencil className="w-3.5 h-3.5" />
+      </button>
       {canDelete && (
         <button
           type="button"
@@ -115,7 +126,7 @@ function SortableChapterItem({
             e.stopPropagation();
             onDelete();
           }}
-          className="p-1 opacity-0 group-hover:opacity-100 hover:bg-red-50 text-red-600 rounded transition-opacity"
+          className="p-1 text-slate-400 hover:text-red-600 hover:bg-red-50 rounded transition-colors"
         >
           <Trash2 className="w-3.5 h-3.5" />
         </button>

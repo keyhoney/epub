@@ -76,20 +76,72 @@
 .ProseMirror .font-myeongjo { font-family: 'Nanum Myeongjo', Batang, serif; }
 .ProseMirror .font-nanum { font-family: 'Nanum Gothic', 'Malgun Gothic', sans-serif; }
 
-.ProseMirror aside.info-box[data-variant="tip"] {
-  background: #ecfdf5;
-  border-color: #10b981;
-  border-left: 4px solid #10b981;
-}
-.ProseMirror aside.info-box[data-variant="warning"] {
-  background: #fffbeb;
-  border-color: #f59e0b;
-  border-left: 4px solid #f59e0b;
-}
-.ProseMirror aside.info-box[data-variant="example"] {
+.ProseMirror blockquote.info-box,
+.epub-preview-root blockquote.info-box {
+  margin: 1em 0;
+  padding: 0.75em 1em;
+  border-radius: 6px;
+  border: 1px solid;
+  border-left-width: 4px;
+  font-style: normal;
   background: #f8fafc;
   border-color: #94a3b8;
-  border-left: 4px solid #64748b;
+  border-left-color: #94a3b8;
+  color: #1e293b;
+}
+.ProseMirror blockquote.info-box h2,
+.epub-preview-root blockquote.info-box h2 {
+  font-size: 1em;
+  font-weight: 600;
+  margin: 0 0 0.25em;
+}
+.ProseMirror blockquote.info-box p,
+.epub-preview-root blockquote.info-box p {
+  margin: 0;
+}
+.ProseMirror blockquote.info-box[data-variant="info"],
+.epub-preview-root blockquote.info-box[data-variant="info"] {
+  background: #eff6ff;
+  border-color: #3b82f6;
+  border-left-color: #3b82f6;
+  color: #1e3a8a;
+}
+.ProseMirror blockquote.info-box[data-variant="info"] h2,
+.epub-preview-root blockquote.info-box[data-variant="info"] h2 {
+  color: #1e3a8a;
+}
+.ProseMirror blockquote.info-box[data-variant="tip"],
+.epub-preview-root blockquote.info-box[data-variant="tip"] {
+  background: #ecfdf5;
+  border-color: #10b981;
+  border-left-color: #10b981;
+  color: #065f46;
+}
+.ProseMirror blockquote.info-box[data-variant="tip"] h2,
+.epub-preview-root blockquote.info-box[data-variant="tip"] h2 {
+  color: #047857;
+}
+.ProseMirror blockquote.info-box[data-variant="warning"],
+.epub-preview-root blockquote.info-box[data-variant="warning"] {
+  background: #fffbeb;
+  border-color: #f59e0b;
+  border-left-color: #f59e0b;
+  color: #92400e;
+}
+.ProseMirror blockquote.info-box[data-variant="warning"] h2,
+.epub-preview-root blockquote.info-box[data-variant="warning"] h2 {
+  color: #b45309;
+}
+.ProseMirror blockquote.info-box[data-variant="example"],
+.epub-preview-root blockquote.info-box[data-variant="example"] {
+  background: #f8fafc;
+  border-color: #94a3b8;
+  border-left-color: #64748b;
+  color: #1e293b;
+}
+.ProseMirror blockquote.info-box[data-variant="example"] h2,
+.epub-preview-root blockquote.info-box[data-variant="example"] h2 {
+  color: #334155;
 }
 
 .ProseMirror h2 { font-size: 1.5em; font-weight: bold; margin: 1.5em 0 0.75em; }
@@ -101,4 +153,32 @@
 
 @media (max-width: 480px) {
   .ProseMirror table.epub-table { font-size: 0.85em; }
+}
+
+/* ===== Premium Scrollbar ===== */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(180deg, #94a3b8, #64748b);
+  border-radius: 3px;
+  transition: background 0.2s ease;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(180deg, #64748b, #475569);
+}
+::-webkit-scrollbar-thumb:active {
+  background: linear-gradient(180deg, #475569, #334155);
+}
+::-webkit-scrollbar-corner {
+  background: transparent;
+}
+
+* {
+  scrollbar-width: thin;
+  scrollbar-color: #64748b transparent;
 }

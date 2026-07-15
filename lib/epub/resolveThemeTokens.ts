@@ -13,6 +13,7 @@ import {
   type CatalogComponentKey,
 } from './styleCatalog';
 import { buildThemeCss } from './themes';
+import { deriveColors, contrastRatio } from './colorUtils';
 
 function getBaseTokens(baseId: string): ThemeTokens {
   return (
@@ -26,20 +27,23 @@ function fillTableColors(
   structural: Partial<ThemeTableTokens> & { style: ThemeTableTokens['style'] },
   colors: ThemeColorTokens,
 ): ThemeTableTokens {
-  const softBg = colors.infoBg || colors.quoteBg;
+  const dc = deriveColors(colors);
+  const softBg = colors.infoBg || dc.subtle;
+  const headerAccentBg = structural.style === 'table-header-accent' ? colors.accent : softBg;
+  const headerAccentText = structural.style === 'table-header-accent'
+    ? (contrastRatio('#ffffff', colors.accent) >= 3 ? '#ffffff' : colors.text)
+    : colors.heading;
   return {
     style: structural.style,
     radius: structural.radius ?? '0',
     cellPadding: structural.cellPadding ?? '0.5em 0.75em',
     fontSize: structural.fontSize,
-    borderColor: structural.borderColor ?? colors.border,
+    borderColor: structural.borderColor ?? dc.cardBorder,
     headerBg:
-      structural.headerBg ??
-      (structural.style === 'table-header-accent' ? colors.accent : softBg),
+      structural.headerBg ?? headerAccentBg,
     headerText:
-      structural.headerText ??
-      (structural.style === 'table-header-accent' ? '#ffffff' : colors.heading),
-    stripeBg: structural.stripeBg ?? softBg,
+      structural.headerText ?? headerAccentText,
+    stripeBg: structural.stripeBg ?? dc.subtle,
   };
 }
 

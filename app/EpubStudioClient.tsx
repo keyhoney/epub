@@ -379,6 +379,7 @@ export default function EpubStudioClient() {
               }
             }}
             onChapterContentReplace={updateChapterContent}
+            onNavigateToChapter={setSelectedChapterId}
             onImageSizeWarning={(msg) => showToast(msg)}
             onFocusTableStyle={handleFocusTableStyle}
           />

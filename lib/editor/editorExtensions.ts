@@ -18,6 +18,7 @@ import type { Extensions } from '@tiptap/react';
 import { ParagraphTypography } from './paragraphTypography';
 import { TextAppearance } from './textAppearance';
 import { EpubImage } from './epubImage';
+import { EpubBlockquote } from './epubBlockquote';
 
 const lowlight = createLowlight(common);
 
@@ -25,11 +26,13 @@ export function createEditorExtensions(): Extensions {
   return [
     StarterKit.configure({
       heading: { levels: [2, 3, 4] },
+      blockquote: false,
       link: false,
       underline: false,
       dropcursor: false,
       codeBlock: false,
     }),
+    EpubBlockquote,
     CodeBlockLowlight.configure({ lowlight }),
     Dropcursor,
     Underline,

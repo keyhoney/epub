@@ -1,23 +1,32 @@
 'use client';
 
-import { useMemo, useState } from 'react';
+import { useMemo, useState, useEffect, useRef } from 'react';
 import type { Editor } from '@tiptap/react';
 import type { Chapter } from '@/lib/types/book';
-import { ChevronDown, ChevronUp, X } from 'lucide-react';
+import { ChevronDown, ChevronUp, X, ArrowRight } from 'lucide-react';
 
 interface FindReplaceModalProps {
   editor: Editor | null;
   chapters: Chapter[];
   currentChapterId: string | null;
   onReplaceChapter: (chapterId: string, content: string) => void;
+  onNavigateToChapter?: (chapterId: string) => void;
   onClose: () => void;
 }
+
+type AllHit = {
+  chapterId: string;
+  chapterTitle: string;
+  chapterIndex: number;
+  nthInChapter: number;
+};
 
 export function FindReplaceModal({
   editor,
   chapters,
   currentChapterId,
   onReplaceChapter,
+  onNavigateToChapter,
   onClose,
 }: FindReplaceModalProps) {
   const [findText, setFindText] = useState('');
@@ -26,6 +35,9 @@ export function FindReplaceModal({
   const [scope, setScope] = useState<'chapter' | 'all'>('chapter');
   const [result, setResult] = useState<string | null>(null);
   const [matchIndex, setMatchIndex] = useState(0);
+  const [allHitIndex, setAllHitIndex] = useState(0);
+  const pendingNavRef = useRef<{ chapterId: string; nthInChapter: number } | null>(null);
+  const pendingSet = useRef(false);
 
   const flags = caseSensitive ? 'g' : 'gi';
 
@@ -36,6 +48,53 @@ export function FindReplaceModal({
     const regex = new RegExp(escaped, flags);
     return (text.match(regex) ?? []).length;
   }, [findText, editor, scope, flags, result]);
+
+  const allHits = useMemo(() => {
+    if (!findText || scope !== 'all') return [];
+    const escaped = findText.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+    const regex = new RegExp(escaped, flags);
+    const hits: AllHit[] = [];
+    chapters.forEach((ch, ci) => {
+      const text = ch.content.replace(/<[^>]+>/g, '');
+      let m: RegExpExecArray | null;
+      const local = new RegExp(escaped, caseSensitive ? 'g' : 'gi');
+      let nth = 0;
+      while ((m = local.exec(text)) !== null) {
+        hits.push({
+          chapterId: ch.id,
+          chapterTitle: ch.title,
+          chapterIndex: ci,
+          nthInChapter: nth,
+        });
+        nth++;
+      }
+    });
+    return hits;
+  }, [findText, chapters, scope, caseSensitive, flags]);
+
+  const selectMatchInEditor = (nth: number) => {
+    if (!editor || !findText) return;
+    const { doc } = editor.state;
+    const escaped = findText.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+    const regex = new RegExp(escaped, caseSensitive ? '' : 'i');
+    const hits: { from: number; to: number }[] = [];
+    doc.descendants((node, pos) => {
+      if (!node.isText || !node.text) return;
+      let m: RegExpExecArray | null;
+      const local = new RegExp(escaped, caseSensitive ? 'g' : 'gi');
+      while ((m = local.exec(node.text)) !== null) {
+        hits.push({
+          from: pos + m.index,
+          to: pos + m.index + m[0].length,
+        });
+      }
+    });
+    const hit = hits[nth];
+    if (hit) {
+      editor.chain().focus().setTextSelection({ from: hit.from, to: hit.to }).run();
+      setMatchIndex(nth + 1);
+    }
+  };
 
   const findInEditor = (direction: 1 | -1) => {
     if (!editor || !findText) return;
@@ -93,24 +152,96 @@ export function FindReplaceModal({
     return { text: next, count };
   };
 
+  const navigateAll = (direction: 1 | -1) => {
+    if (allHits.length === 0) return;
+
+    let nextIdx = allHitIndex + direction;
+    if (nextIdx < 0) nextIdx = allHits.length - 1;
+    if (nextIdx >= allHits.length) nextIdx = 0;
+    setAllHitIndex(nextIdx);
+
+    const hit = allHits[nextIdx];
+    setResult(`${nextIdx + 1} / ${allHits.length} · ${hit.chapterTitle}`);
+
+    if (hit.chapterId === currentChapterId && editor) {
+      pendingNavRef.current = null;
+      selectMatchInEditor(hit.nthInChapter);
+    } else {
+      pendingNavRef.current = { chapterId: hit.chapterId, nthInChapter: hit.nthInChapter };
+      onNavigateToChapter?.(hit.chapterId);
+    }
+  };
+
+  useEffect(() => {
+    if (!pendingNavRef.current || !editor) return;
+    if (currentChapterId !== pendingNavRef.current.chapterId) return;
+    if (pendingSet.current) return;
+    pendingSet.current = true;
+    selectMatchInEditor(pendingNavRef.current.nthInChapter);
+    pendingNavRef.current = null;
+    const timer = setTimeout(() => { pendingSet.current = false; }, 300);
+    return () => clearTimeout(timer);
+  }, [currentChapterId, editor?.state]);
+
   const handleReplaceOne = () => {
     if (!editor || !findText || !currentChapterId) return;
-    const { from, to, empty } = editor.state.selection;
-    if (empty) {
+
+    if (scope === 'chapter') {
+      const { from, to, empty } = editor.state.selection;
+      if (empty) {
+        findInEditor(1);
+        return;
+      }
+      const selected = editor.state.doc.textBetween(from, to);
+      const cmp = caseSensitive
+        ? selected === findText
+        : selected.toLowerCase() === findText.toLowerCase();
+      if (!cmp) {
+        findInEditor(1);
+        return;
+      }
+      editor.chain().focus().insertContent(replaceText).run();
+      onReplaceChapter(currentChapterId, editor.getHTML());
       findInEditor(1);
       return;
     }
+
+    if (scope === 'all') {
+      const hit = allHits[allHitIndex];
+      if (!hit) return;
+      if (hit.chapterId !== currentChapterId) {
+        setResult(`"${hit.chapterTitle}" 장으로 이동 후 바꿔주세요.`);
+        return;
+      }
+      handleReplaceOneChapter(currentChapterId);
+    }
+  };
+
+  const handleReplaceOneChapter = (chapterId: string) => {
+    if (!editor || !findText) return;
+    const { from, to, empty } = editor.state.selection;
+    if (empty) return;
     const selected = editor.state.doc.textBetween(from, to);
     const cmp = caseSensitive
       ? selected === findText
       : selected.toLowerCase() === findText.toLowerCase();
-    if (!cmp) {
-      findInEditor(1);
-      return;
-    }
+    if (!cmp) return;
     editor.chain().focus().insertContent(replaceText).run();
-    onReplaceChapter(currentChapterId, editor.getHTML());
-    findInEditor(1);
+    onReplaceChapter(chapterId, editor.getHTML());
+    const newHitsCount = reCountCurrentChapter();
+    if (newHitsCount > 0) {
+      findInEditor(1);
+    } else {
+      setResult('바꿈 완료 (더 이상 일치 없음)');
+    }
+  };
+
+  const reCountCurrentChapter = () => {
+    if (!editor || !findText) return 0;
+    const text = editor.state.doc.textContent;
+    const escaped = findText.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+    const regex = new RegExp(escaped, flags);
+    return (text.match(regex) ?? []).length;
   };
 
   const handleReplaceAll = () => {
@@ -156,7 +287,11 @@ export function FindReplaceModal({
             <button
               key={s}
               type="button"
-              onClick={() => setScope(s)}
+              onClick={() => {
+                setScope(s);
+                setResult(null);
+                setAllHitIndex(0);
+              }}
               className={`flex-1 py-1 text-xs rounded ${
                 scope === s ? 'bg-blue-600 text-white' : 'bg-slate-100'
               }`}
@@ -172,6 +307,7 @@ export function FindReplaceModal({
           onChange={(e) => {
             setFindText(e.target.value);
             setResult(null);
+            setAllHitIndex(0);
           }}
           className="w-full px-2 py-1.5 text-sm border rounded mb-2"
         />
@@ -192,43 +328,61 @@ export function FindReplaceModal({
         </label>
 
         {result && <p className="text-xs text-green-600 mb-2">{result}</p>}
+
         {scope === 'chapter' && findText && matchCount > 0 && !result?.includes('바꿈') && (
           <p className="text-xs text-slate-500 mb-2">일치 {matchCount}건</p>
         )}
 
+        {scope === 'all' && findText && allHits.length > 0 && !result?.includes('바꿈') && (
+          <p className="text-xs text-slate-500 mb-2">전체 {allHits.length}건</p>
+        )}
+
         <div className="flex flex-wrap justify-end gap-2">
-          {scope === 'chapter' && (
-            <>
-              <button
-                type="button"
-                onClick={() => findInEditor(-1)}
-                disabled={!findText}
-                className="px-2 py-1.5 text-sm border rounded disabled:opacity-50 flex items-center gap-1"
-                title="이전"
-              >
-                <ChevronUp className="w-4 h-4" />
-                이전
-              </button>
-              <button
-                type="button"
-                onClick={() => findInEditor(1)}
-                disabled={!findText}
-                className="px-2 py-1.5 text-sm border rounded disabled:opacity-50 flex items-center gap-1"
-                title="다음"
-              >
-                <ChevronDown className="w-4 h-4" />
-                다음
-              </button>
-              <button
-                type="button"
-                onClick={handleReplaceOne}
-                disabled={!findText}
-                className="px-3 py-1.5 text-sm border rounded disabled:opacity-50"
-              >
-                바꾸기
-              </button>
-            </>
+          <button
+            type="button"
+            onClick={() => {
+              if (scope === 'chapter') findInEditor(-1);
+              else navigateAll(-1);
+            }}
+            disabled={!findText || (scope === 'all' && allHits.length === 0)}
+            className="px-2 py-1.5 text-sm border rounded disabled:opacity-50 flex items-center gap-1"
+            title="이전"
+          >
+            <ChevronUp className="w-4 h-4" />
+            이전
+          </button>
+          <button
+            type="button"
+            onClick={() => {
+              if (scope === 'chapter') findInEditor(1);
+              else navigateAll(1);
+            }}
+            disabled={!findText || (scope === 'all' && allHits.length === 0)}
+            className="px-2 py-1.5 text-sm border rounded disabled:opacity-50 flex items-center gap-1"
+            title="다음"
+          >
+            <ChevronDown className="w-4 h-4" />
+            다음
+          </button>
+          {scope === 'all' && allHits[allHitIndex]?.chapterId !== currentChapterId && allHits.length > 0 && (
+            <button
+              type="button"
+              onClick={() => onNavigateToChapter?.(allHits[allHitIndex].chapterId)}
+              className="px-2 py-1.5 text-sm border rounded flex items-center gap-1 text-blue-600 border-blue-300"
+              title="해당 장으로 이동"
+            >
+              <ArrowRight className="w-4 h-4" />
+              {allHits[allHitIndex].chapterTitle} 이동
+            </button>
           )}
+          <button
+            type="button"
+            onClick={handleReplaceOne}
+            disabled={!findText || (scope === 'all' && allHits.length === 0)}
+            className="px-3 py-1.5 text-sm border rounded disabled:opacity-50"
+          >
+            바꾸기
+          </button>
           <button
             type="button"
             onClick={onClose}

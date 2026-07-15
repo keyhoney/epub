@@ -9,6 +9,7 @@ import {
 import { generateNav } from './generateNav';
 import { generateOpf } from './generateOpf';
 import { validateMetadataForExport } from './metadataValidation';
+import { MIME_TYPES } from './mimeTypes';
 
 export interface EpubPackageFile {
   path: string;
@@ -59,7 +60,7 @@ export function prepareEpubPackage(bookState: BookState): EpubBuildResult {
   const files: EpubPackageFile[] = [
     {
       path: 'mimetype',
-      content: 'application/epub+zip',
+      content: MIME_TYPES.epub,
       compression: 'STORE',
     },
     {
@@ -67,7 +68,7 @@ export function prepareEpubPackage(bookState: BookState): EpubBuildResult {
       content: `<?xml version="1.0" encoding="UTF-8"?>
 <container version="1.0" xmlns="urn:oasis:names:tc:opendocument:xmlns:container">
   <rootfiles>
-    <rootfile full-path="OEBPS/content.opf" media-type="application/oebps-package+xml"/>
+    <rootfile full-path="OEBPS/content.opf" media-type="${MIME_TYPES.opf}"/>
   </rootfiles>
 </container>`,
     },
@@ -105,7 +106,7 @@ export async function buildEpub(bookState: BookState): Promise<Blob> {
 
   return zip.generateAsync({
     type: 'blob',
-    mimeType: 'application/epub+zip',
+    mimeType: MIME_TYPES.epub,
     compression: 'DEFLATE',
     compressionOptions: { level: 9 },
   });

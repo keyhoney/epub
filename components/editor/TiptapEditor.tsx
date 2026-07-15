@@ -21,6 +21,7 @@ interface TiptapEditorProps {
   chapters: Chapter[];
   onUpdate: (content: string) => void;
   onChapterContentReplace: (chapterId: string, content: string) => void;
+  onNavigateToChapter?: (chapterId: string) => void;
   onImageSizeWarning?: (message: string) => void;
   onFocusTableStyle?: () => void;
 }
@@ -31,6 +32,7 @@ export function TiptapEditor({
   chapters,
   onUpdate,
   onChapterContentReplace,
+  onNavigateToChapter,
   onImageSizeWarning,
   onFocusTableStyle,
 }: TiptapEditorProps) {
@@ -201,6 +203,7 @@ export function TiptapEditor({
               editor.commands.setContent(newContent, { emitUpdate: false });
             }
           }}
+          onNavigateToChapter={onNavigateToChapter}
           onClose={() => setShowFindReplace(false)}
         />
       )}

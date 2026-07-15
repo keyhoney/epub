@@ -1,6 +1,7 @@
 import type { BookMetadata, Chapter, ContributorRole } from '@/lib/types/book';
 import type { ExtractedImage } from './extractImages';
 import { normalizeIsbn } from './metadataValidation';
+import { MIME_TYPES, getMimeType } from './mimeTypes';
 
 function escapeXml(text: string): string {
   return text
@@ -98,19 +99,20 @@ export function generateOpf(
     metadataXml += `\n    <meta name="cover" content="cover-image"/>`;
   }
 
-  let manifestXml = `    <item id="nav" href="nav.xhtml" media-type="application/xhtml+xml" properties="nav"/>
-    <item id="style" href="styles/style.css" media-type="text/css"/>`;
+  let manifestXml = `    <item id="nav" href="nav.xhtml" media-type="${MIME_TYPES.xhtml}" properties="nav"/>
+    <item id="style" href="styles/style.css" media-type="${MIME_TYPES.css}"/>`;
 
   sorted.forEach((_, index) => {
     const id = `chapter${index + 1}`;
     const href = `text/chapter${index + 1}.xhtml`;
-    manifestXml += `\n    <item id="${id}" href="${href}" media-type="application/xhtml+xml"/>`;
+    manifestXml += `\n    <item id="${id}" href="${href}" media-type="${MIME_TYPES.xhtml}"/>`;
   });
 
   images.forEach((img) => {
     const properties =
       img.id === 'cover-image' ? ` properties="cover-image"` : '';
-    manifestXml += `\n    <item id="${img.id}" href="${img.href}" media-type="${img.mediaType}"${properties}/>`;
+    const mime = img.mediaType || getMimeType(img.href.split('.').pop() ?? '');
+    manifestXml += `\n    <item id="${img.id}" href="${img.href}" media-type="${mime}"${properties}/>`;
   });
 
   let spineXml = '';

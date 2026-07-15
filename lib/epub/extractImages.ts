@@ -1,8 +1,10 @@
+import { getExtensionFromMimeSub, getMimeType } from './mimeTypes';
+
 export interface ExtractedImage {
   id: string;
   path: string;
   href: string;
-  mediaType: 'image/jpeg' | 'image/png' | 'image/gif' | 'image/webp';
+  mediaType: string;
   data: Uint8Array;
 }
 
@@ -12,7 +14,7 @@ export interface ImageExtractionResult {
 }
 
 const DATA_URL_REGEX =
-  /src=["'](data:image\/(jpeg|jpg|png|gif|webp);base64,([^"']+))["']/gi;
+  /src=["'](data:image\/(jpeg|jpg|png|gif|webp|avif|bmp|svg\+xml|tiff|heic|heif|apng);base64,([^"']+))["']/gi;
 
 function decodeDataUrl(
   mimeSub: string,
@@ -26,17 +28,8 @@ function decodeDataUrl(
       bytes[i] = binary.charCodeAt(i);
     }
 
-    const extMap: Record<string, string> = {
-      jpeg: 'jpg',
-      jpg: 'jpg',
-      png: 'png',
-      gif: 'gif',
-      webp: 'webp',
-    };
-    const ext = extMap[mimeSub.toLowerCase()] ?? 'png';
-    const mediaType = (
-      ext === 'jpg' ? 'image/jpeg' : `image/${ext}`
-    ) as ExtractedImage['mediaType'];
+    const ext = getExtensionFromMimeSub(mimeSub);
+    const mediaType = getMimeType(ext);
     const filename = `img-${String(index).padStart(3, '0')}.${ext}`;
     const path = `OEBPS/images/${filename}`;
     const href = `images/${filename}`;
@@ -82,7 +75,7 @@ export function extractCoverImage(
   if (!coverDataUrl) return null;
 
   const match = coverDataUrl.match(
-    /^data:image\/(jpeg|jpg|png|gif|webp);base64,(.+)$/i,
+    /^data:image\/(jpeg|jpg|png|gif|webp|avif|bmp|svg\+xml|tiff|heic|heif|apng);base64,(.+)$/i,
   );
   if (!match) return null;
 
@@ -90,10 +83,8 @@ export function extractCoverImage(
   const image = decodeDataUrl(mimeSub, base64, 0);
   if (!image) return null;
 
-  const ext = mimeSub.toLowerCase() === 'png' ? 'png' : 'jpg';
-  const mediaType = (
-    ext === 'png' ? 'image/png' : 'image/jpeg'
-  ) as ExtractedImage['mediaType'];
+  const ext = getExtensionFromMimeSub(mimeSub);
+  const mediaType = getMimeType(ext);
 
   return {
     ...image,

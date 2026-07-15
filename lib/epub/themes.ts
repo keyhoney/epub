@@ -4,6 +4,7 @@ import {
   type ThemeCategory,
   type ThemeTokens,
 } from './themeTokens';
+import { deriveColors, deriveVariantColors } from './colorUtils';
 
 export { DEFAULT_THEME_ID, isValidThemeId } from './themeTokens';
 
@@ -133,16 +134,24 @@ function buildInfoBoxCss(tokens: ThemeTokens): string {
       borderCss = `border: 1px solid ${colors.infoBorder}; border-left: 4px solid ${colors.infoBorder};`;
   }
 
-  return `.info-box { background: ${colors.infoBg}; ${borderCss} padding: ${padding}; margin: 2em 0; border-radius: ${radius}; box-shadow: ${shadow}; }
+  const dc = deriveColors(colors);
+  const vc = deriveVariantColors(colors.accent, colors.bg);
+
+  return `.info-box { background: ${colors.infoBg}; ${borderCss} padding: ${padding}; margin: 2em 0; border-radius: ${radius}; box-shadow: ${shadow}; color: ${colors.text}; }
 .info-box h2 { margin-top: 0; font-size: 1.1em; color: ${titleColor}; text-transform: ${titleTransform}; letter-spacing: ${titleLetterSpacing}; margin-bottom: 0.5em; }
-.info-box p { margin: 0; font-size: 0.95em; }
-.info-box[data-variant="tip"] { background: #ecfdf5; border-color: #10b981; border-left-color: #10b981; }
-.info-box[data-variant="tip"] h2 { color: #047857; }
-.info-box[data-variant="warning"] { background: #fffbeb; border-color: #f59e0b; border-left-color: #f59e0b; }
-.info-box[data-variant="warning"] h2 { color: #b45309; }
-.info-box[data-variant="example"] { background: #f8fafc; border-color: #94a3b8; border-left-color: #64748b; }
-.info-box[data-variant="example"] h2 { color: #334155; }
-.info-box[data-variant="info"] { }`;
+.info-box p { margin: 0; font-size: 0.95em; color: ${colors.text}; }
+.info-box[data-variant="tip"] { background: ${vc.tip.bg}; border-color: ${vc.tip.border}; border-left-color: ${vc.tip.border}; color: ${vc.tip.text}; }
+.info-box[data-variant="tip"] h2 { color: ${vc.tip.heading}; }
+.info-box[data-variant="tip"] p { color: ${vc.tip.text}; }
+.info-box[data-variant="warning"] { background: ${vc.warning.bg}; border-color: ${vc.warning.border}; border-left-color: ${vc.warning.border}; color: ${vc.warning.text}; }
+.info-box[data-variant="warning"] h2 { color: ${vc.warning.heading}; }
+.info-box[data-variant="warning"] p { color: ${vc.warning.text}; }
+.info-box[data-variant="example"] { background: ${vc.example.bg}; border-color: ${vc.example.border}; border-left-color: ${vc.example.border}; color: ${vc.example.text}; }
+.info-box[data-variant="example"] h2 { color: ${vc.example.heading}; }
+.info-box[data-variant="example"] p { color: ${vc.example.text}; }
+.info-box[data-variant="info"] { background: ${vc.info.bg}; border-color: ${vc.info.border}; border-left-color: ${vc.info.border}; color: ${vc.info.text}; }
+.info-box[data-variant="info"] h2 { color: ${vc.info.heading}; }
+.info-box[data-variant="info"] p { color: ${vc.info.text}; }`;
 }
 
 function buildDropCapCss(tokens: ThemeTokens): string {
@@ -286,7 +295,7 @@ function buildFigureCss(tokens: ThemeTokens): string {
   const capColor = figure.captionColor ?? colors.text;
   const radius = figure.imageRadius ?? '0';
 
-  const caption = `figcaption { font-size: ${capSize}; opacity: 0.8; margin-top: 0.5em; font-style: italic; text-align: ${align}; color: ${capColor}; }`;
+  const caption = `figcaption { font-size: ${capSize}; margin-top: 0.5em; font-style: italic; text-align: ${align}; color: ${capColor}; }`;
   const img = `figure.epub-figure img { display: block; margin: 0 auto; max-width: 100%; border-radius: ${radius}; }`;
 
   switch (figure.style) {
@@ -312,6 +321,7 @@ ${caption}`;
 
 function buildCodeCss(tokens: ThemeTokens): string {
   const { colors, code } = tokens;
+  const dc = deriveColors(colors);
   const bgOpacity = code?.bgOpacity ?? 0.06;
   const borderRadius = code?.borderRadius ?? '4px';
   const border = code?.border ?? 'none';
@@ -319,17 +329,17 @@ function buildCodeCss(tokens: ThemeTokens): string {
     ? `border-left: 3px solid ${colors.accent};`
     : '';
 
-  return `pre { background: rgba(0,0,0,${bgOpacity}); padding: 1em; border-radius: ${borderRadius}; overflow-x: auto; margin: 1em 0; border: ${border}; ${accentBorder} }
-code { font-family: Consolas, Monaco, monospace; font-size: 0.9em; background: rgba(0,0,0,${bgOpacity}); padding: 0.15em 0.35em; border-radius: 3px; color: ${colors.heading}; }
+  return `pre { background: ${dc.codeBg}; padding: 1em; border-radius: ${borderRadius}; overflow-x: auto; margin: 1em 0; border: ${border}; ${accentBorder} }
+code { font-family: Consolas, Monaco, monospace; font-size: 0.9em; background: ${dc.codeBg}; padding: 0.15em 0.35em; border-radius: 3px; color: ${colors.heading}; }
 pre code { background: none; padding: 0; color: inherit; }
 mark { border-radius: 2px; padding: 0 0.15em; background: ${colors.quoteBg}; color: ${colors.text}; }
 p.spacer { margin: 2em 0; }
 ul, ol { margin: 1em 0; padding-left: 1.5em; }
 blockquote.epigraph { text-align: center; font-style: italic; margin: 2.5em 2em; border: none; background: transparent; padding: 0; font-size: 1.1em; color: ${colors.heading}; }
-blockquote.epigraph cite { display: block; margin-top: 0.75em; font-size: 0.85em; font-style: normal; opacity: 0.8; }
-aside.footnote { font-size: 0.85em; margin: 1.5em 0; padding: 0.75em 1em; border-top: 1px dashed ${colors.border}; color: ${colors.text}; opacity: 0.9; }
+blockquote.epigraph cite { display: block; margin-top: 0.75em; font-size: 0.85em; font-style: normal; color: ${colors.accent}; }
+aside.footnote { font-size: 0.85em; margin: 1.5em 0; padding: 0.75em 1em; border-top: 1px dashed ${dc.cardBorder}; color: ${dc.muted}; }
 aside.footnote p { margin: 0; }
-hr.page-break { border: none; border-top: 2px dashed ${colors.border}; margin: 3em 0; page-break-after: always; break-after: page; }
+hr.page-break { border: none; border-top: 2px dashed ${dc.cardBorder}; margin: 3em 0; page-break-after: always; break-after: page; }
 .line-height-normal { line-height: 1.5; }
 .line-height-relaxed { line-height: 1.8; }
 .line-height-loose { line-height: 2; }
@@ -358,6 +368,7 @@ a[epub|type="noteref"] { text-decoration: none; color: ${colors.accent}; font-si
 
 export function buildThemeCss(tokens: ThemeTokens): string {
   const { colors, fonts, body } = tokens;
+  const dc = deriveColors(colors);
   const lineHeight = tokens.lineHeight ?? 1.8;
   const maxWidth = body?.maxWidth ?? '800px';
   const padding = body?.padding ?? '2em';
@@ -365,6 +376,10 @@ export function buildThemeCss(tokens: ThemeTokens): string {
   const letterSpacing = body?.letterSpacing ?? 'normal';
 
   return `body { font-family: ${fonts.body}; line-height: ${lineHeight}; padding: ${padding}; max-width: ${maxWidth}; margin: auto; background-color: ${colors.bg}; color: ${colors.text}; font-size: ${fontSize}; letter-spacing: ${letterSpacing}; }
+::selection { background: ${dc.selectionBg}; }
+.text-muted { color: ${dc.muted}; }
+.text-heading-muted { color: ${dc.headingMuted}; }
+.bg-subtle { background: ${dc.subtle}; }
 ${buildTitleCss(tokens)}
 ${buildQuoteCss(tokens)}
 ${buildDropCapCss(tokens)}
